@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -55,3 +56,45 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
   } else return NULL;
 }
 
+void array_parse(char *string,char **array)
+{
+  array[0] = strtok(string," ");
+  short i = 0;
+  while(array[i] != NULL)
+    array[++i] = strtok(NULL," ");
+}
+
+bool check_and(char *string)
+{
+  char *copy = (char*)malloc(sizeof(char)*strlen(string));
+  strcpy(copy,string);
+  if(strstr(string, "&&") != NULL) {
+    free(copy);
+    return true;
+  }
+  else {
+    free(copy);
+    return false;
+  }
+}
+
+bool check_pipe(char *string)
+{
+  char *copy = (char*)malloc(sizeof(char)*strlen(string));
+  strcpy(copy,string);
+  if(strchr(copy, '|') != NULL) {
+    free(copy);
+    return true;
+  }
+  else {
+    free(copy);
+    return false;
+  }
+}
+
+bool check_builtin(char *string)
+{
+  if(!strcmp(string,"exit"))
+    return true;
+  else return false;
+}
