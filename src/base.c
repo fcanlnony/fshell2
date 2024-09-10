@@ -8,8 +8,7 @@
 
 char* getusername()
 {
-  struct passwd *pwd;
-  pwd = getpwuid(getuid());
+  struct passwd *pwd = getpwuid(getuid());
   char *username = (char*)malloc(sizeof(char)*strlen(pwd->pw_name));
   memcpy(username,pwd->pw_name,sizeof(char)*strlen(pwd->pw_name));
   return username;
