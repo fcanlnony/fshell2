@@ -5,6 +5,7 @@
 
 #include "parse.h"
 #include "array.h"
+#include "memory.h"
 
 cmd_t array_chain_parse(char *input,cmd_t array_chain)
 {
@@ -14,7 +15,7 @@ cmd_t array_chain_parse(char *input,cmd_t array_chain)
   tmp_str = strtok(input,"&&");
   if(tmp_str != NULL) {
     char *new = (char*)malloc(sizeof(char)*strlen(tmp_str));
-    strcpy(new,tmp_str);
+    strlcpy(new,tmp_str,count_for_strlcpy(tmp_str));
     current->sentence = new;
     while(1) {
       tmp_str = strtok(NULL,"&&");
@@ -22,7 +23,7 @@ cmd_t array_chain_parse(char *input,cmd_t array_chain)
 	current->next = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
 	current = current->next;
 	char *new2 = (char*)malloc(sizeof(char)*strlen(tmp_str));
-	strcpy(new2,tmp_str);
+	strlcpy(new2,tmp_str,count_for_strlcpy(tmp_str));
 	current->sentence = new2;
 	current->next = NULL;
       } else break;
@@ -39,7 +40,7 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
   tmp_str = strtok(input,"|");
   if(tmp_str != NULL) {
     char *new = (char*)malloc(sizeof(char)*strlen(tmp_str));
-    strcpy(new,tmp_str);
+    strlcpy(new,tmp_str,count_for_strlcpy(tmp_str));
     current->sentence = new;
     while(1) {
       tmp_str = strtok(NULL,"|");
@@ -47,7 +48,7 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
 	current->next = (pipe_t)malloc(sizeof(struct cmd_or_pipe_chain));
 	current = current->next;
 	char *new2 = (char*)malloc(sizeof(char)*strlen(tmp_str));
-	strcpy(new2,tmp_str);
+	strlcpy(new2,tmp_str,count_for_strlcpy(tmp_str));
 	current->sentence = new2;
 	current->next = NULL;
       } else break;
@@ -67,7 +68,7 @@ void array_parse(char *string,char **array)
 bool check_and(char *string)
 {
   char *copy = (char*)malloc(sizeof(char)*strlen(string));
-  strcpy(copy,string);
+  strlcpy(copy,string,count_for_strlcpy(string));
   if(strstr(string, "&&") != NULL) {
     free(copy);
     return true;
@@ -81,7 +82,7 @@ bool check_and(char *string)
 bool check_pipe(char *string)
 {
   char *copy = (char*)malloc(sizeof(char)*strlen(string));
-  strcpy(copy,string);
+  strlcpy(copy,string,count_for_strlcpy(string));
   if(strchr(copy, '|') != NULL) {
     free(copy);
     return true;
