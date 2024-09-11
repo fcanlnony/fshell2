@@ -44,5 +44,6 @@ int main(int argc,char **argv)
     fflush(stdout);
     free(user->username);
     free(user->userdir);
+    free(user);
   }
 }
