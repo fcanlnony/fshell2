@@ -19,7 +19,7 @@ char* getcurrentdir()
   char *tmp_dir = malloc(sizeof(char)*MAX_DIR);
   tmp_dir = getcwd(tmp_dir, MAX_DIR);
   char *dir = (char*)malloc(sizeof(char)*strlen(tmp_dir));
-  memcpy(dir,tmp_dir,sizeof(char)*strlen(tmp_dir));
+  strcpy(dir,tmp_dir);
   return dir;
 }
 
