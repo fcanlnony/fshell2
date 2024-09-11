@@ -24,14 +24,14 @@ int main(int argc,char **argv)
 {
   if(setjmp(sig_back_while))
     printf("\n");
+  user_t user = NULL;
   while(1) { 
     signal(SIGINT,back_jump);
     signal(SIGSEGV,back_jump);
-    user_t user = init_user_information(getusername(), getcurrentdir(),user);
-    char *prompt = fshell_prompt_readline(user->username,user->userdir,prompt);
+    user = init_user_information(getusername(), getcurrentdir(),user);
+    char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
     fflush(stdin);
-    free(prompt);
     if(!strcmp(input, "exit"))
       exit(0);
     if(check_and(input) == false) {
@@ -42,5 +42,7 @@ int main(int argc,char **argv)
     }
     free(input);
     fflush(stdout);
+    free(user->username);
+    free(user->userdir);
   }
 }
