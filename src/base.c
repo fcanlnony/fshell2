@@ -5,12 +5,13 @@
 #include <unistd.h>
 
 #include "base.h"
+#include "memory.h"
 
 char* getusername()
 {
   struct passwd *pwd = getpwuid(getuid());
   char *username = (char*)malloc(sizeof(char)*strlen(pwd->pw_name));
-  strlcpy(username,pwd->pw_name,sizeof(char)*strlen(pwd->pw_name)+sizeof(char));
+  strlcpy(username,pwd->pw_name,count_for_strlcpy(pwd->pw_name));
   return username;
 }
 
@@ -19,7 +20,7 @@ char* getcurrentdir()
   char *tmp_dir = malloc(sizeof(char)*MAX_DIR);
   tmp_dir = getcwd(tmp_dir, MAX_DIR);
   char *dir = (char*)malloc(sizeof(char)*strlen(tmp_dir));
-  strlcpy(dir,tmp_dir,sizeof(char)*strlen(tmp_dir)+sizeof(char));
+  strlcpy(dir,tmp_dir,count_for_strlcpy(tmp_dir));
   return dir;
 }
 
