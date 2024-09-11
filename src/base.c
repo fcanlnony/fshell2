@@ -10,7 +10,7 @@ char* getusername()
 {
   struct passwd *pwd = getpwuid(getuid());
   char *username = (char*)malloc(sizeof(char)*strlen(pwd->pw_name));
-  memcpy(username,pwd->pw_name,sizeof(char)*strlen(pwd->pw_name));
+  strlcpy(username,pwd->pw_name,sizeof(char)*strlen(pwd->pw_name)+sizeof(char));
   return username;
 }
 
@@ -19,7 +19,7 @@ char* getcurrentdir()
   char *tmp_dir = malloc(sizeof(char)*MAX_DIR);
   tmp_dir = getcwd(tmp_dir, MAX_DIR);
   char *dir = (char*)malloc(sizeof(char)*strlen(tmp_dir));
-  strcpy(dir,tmp_dir);
+  strlcpy(dir,tmp_dir,sizeof(char)*strlen(tmp_dir)+sizeof(char));
   return dir;
 }
 
