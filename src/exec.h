@@ -3,7 +3,7 @@
 
 #include "array.h"
 
-short execvp_without_pipe(char **array);
-void execvp_with_pipe(pipe_t pipe_chain);
+extern short execvp_without_pipe(char **array);
+extern void execvp_with_pipe(pipe_t pipe_chain);
 
 #endif /*FSHELL_EXEC_H_*/
