@@ -20,4 +20,4 @@ uninstall:
 	rm /bin/fshell
 
 debug:
-	${CC} ${HEADERS} ${SOURCES} -o ${NAME} -g
+	${CC} ${HEADERS} ${SOURCES} -o ${NAME} -g ${CFLAGS}
