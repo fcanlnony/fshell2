@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 #include <sys/types.h>
 #include <signal.h>
 #include <setjmp.h>
@@ -25,12 +26,19 @@ int main(int argc,char **argv)
   if(setjmp(sig_back_while))
     printf("\n");
   user_t user = NULL;
+  char *readline_path = NULL;
+  if(check_root(getusername()) == true) 
+    readline_path = readline_history_path(getusername(), readline_path);
+  else readline_path = readline_history_path(getusername(), readline_path);
+  read_history(readline_path);
   while(1) { 
     signal(SIGINT,back_jump);
     signal(SIGSEGV,back_jump);
     user = init_user_information(getusername(), getcurrentdir(),user);
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
+    add_history(input);
+    write_history(readline_path);
     fflush(stdin);
     if(!strcmp(input, "exit"))
       exit(0);

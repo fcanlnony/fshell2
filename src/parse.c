@@ -99,3 +99,10 @@ bool check_builtin(char *string)
     return true;
   else return false;
 }
+
+bool check_root(char *username)
+{
+  if(!strcmp(username,"root"))
+    return true;
+  else return false;
+}

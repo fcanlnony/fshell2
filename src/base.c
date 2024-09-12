@@ -48,3 +48,17 @@ char* fshell_prompt_readline(char *username,char *currentdir,char *prompt)
   sprintf(prompt, "%s [ %s ]\n>>> ",username,currentdir);
   return prompt;
 }
+
+char* readline_history_path(char *username,char *path)
+{
+  if(!strcmp(username,"root")) {
+    path = (char*)malloc(sizeof(char)*strlen("/root/.fshell_historys"));
+    sprintf(path, "/root/.fshell_historys");
+    return path;
+  } else {
+    path = (char*)malloc(sizeof(char)*(strlen("/home/")+strlen(username)+strlen("/.fshell_historys")));
+    sprintf(path, "/home/%s/.fshell_historys",username);
+    return path;
+  }
+  return NULL;
+}

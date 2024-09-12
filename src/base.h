@@ -21,6 +21,7 @@ extern char* getcurrentdir_b(user_t user);
 /*the B scheme to get the username and dir */
 
 extern char* fshell_prompt_readline(char *username,char *currentdir,char *prompt);
+extern char* readline_history_path(char *username,char *path);
 
 #define MAX_DIR 256
 
