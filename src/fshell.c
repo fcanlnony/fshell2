@@ -62,11 +62,11 @@ int main(int argc,char **argv)
 	  } else break;
 	}	
       }
-      free(input);
+      FREE_USERT_FUNC(input);
       fflush(stdout);
-      free(user->username);
-      free(user->userdir);
-      free(user);
+      FREE_USERT_FUNC(user->username);
+      FREE_USERT_FUNC(user->userdir);
+      FREE_USERT_FUNC(user);
     }
   }
 }
