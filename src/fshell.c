@@ -10,6 +10,7 @@
 #include <setjmp.h>
 
 #include "fshell.h"
+#include "array.h"
 #include "base.h"
 #include "parse.h"
 #include "exec.h"
@@ -47,11 +48,25 @@ int main(int argc,char **argv)
 	array_parse(input, array);
 	execvp_without_pipe(array);
       }
+    } else {
+      if(check_pipe(input) == false) {
+	cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
+	cmd_t current = cmd_chain;
+	while(1) {
+	  if(current->sentence != NULL) {
+	    array_parse(current->sentence, array);
+	    execvp_without_pipe(array);
+	  }
+	  if(current->next != NULL) {
+	    current = current->next;
+	  } else break;
+	}	
+      }
+      free(input);
+      fflush(stdout);
+      free(user->username);
+      free(user->userdir);
+      free(user);
     }
-    free(input);
-    fflush(stdout);
-    free(user->username);
-    free(user->userdir);
-    free(user);
   }
 }
