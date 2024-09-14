@@ -13,7 +13,7 @@ short execvp_without_pipe(char **array)
   } else if(pid == 0) {
     if(execvp(array[0],array) < 0)
       fprintf(stderr, "fshell : %s : command not found.\n", array[0]);
-      exit(0);
+    return -1;
   } else wait(NULL);
   return 0;
 }
