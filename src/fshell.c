@@ -15,7 +15,6 @@
 #include "parse.h"
 #include "exec.h"
 
-char *array[] = {NULL};
 static jmp_buf sig_back_while;
 static void back_jump()
 {
@@ -40,11 +39,11 @@ int main(int argc,char **argv)
     char *input = readline(prompt);
     add_history(input);
     write_history(readline_path);
-    fflush(stdin);
     if(!strcmp(input, "exit"))
       exit(0);
     if(check_and(input) == false) {
       if(check_pipe(input) == false) {
+	char *array[] = {NULL};
 	array_parse(input, array);
 	execvp_without_pipe(array);
       }
@@ -52,6 +51,7 @@ int main(int argc,char **argv)
       if(check_pipe(input) == false) {
 	cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
 	cmd_t current = cmd_chain;
+	char *array[] = {NULL};
 	while(1) {
 	  if(current->sentence != NULL) {
 	    array_parse(current->sentence, array);
@@ -63,7 +63,7 @@ int main(int argc,char **argv)
 	}	
       }
       FREE_USERT_FUNC(input);
-      fflush(stdout);
+      FREE_USERT_FUNC(prompt);
       FREE_USERT_FUNC(user->username);
       FREE_USERT_FUNC(user->userdir);
       FREE_USERT_FUNC(user);

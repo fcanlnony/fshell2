@@ -56,7 +56,7 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
     return pipe_chain;
   } else return NULL;
 }
-
+/*
 void array_parse(char *string,char **array)
 {
   array[0] = strtok(string," ");
@@ -64,7 +64,7 @@ void array_parse(char *string,char **array)
   while(array[i] != NULL)
     array[++i] = strtok(NULL," ");
 }
-
+*/
 bool check_and(char *string)
 {
   if(strstr(string, "&&") != NULL)
