@@ -52,12 +52,14 @@ char* fshell_prompt_readline(char *username,char *currentdir,char *prompt)
 char* readline_history_path(char *username,char *path)
 {
   if(!strcmp(username,"root")) {
-    path = (char*)malloc(sizeof(char)*strlen("/root/.fshell_historys"));
-    sprintf(path, "/root/.fshell_historys");
+    path = (char*)calloc(strlen("/root/.fshell_historys"),sizeof(char));
+    strlcpy(path, "/root/.fshell_historys",count_for_strlcpy("/root/.fshell_historys"));
     return path;
   } else {
-    path = (char*)malloc(sizeof(char)*(strlen("/home/")+strlen(username)+strlen("/.fshell_historys")));
-    sprintf(path, "/home/%s/.fshell_historys",username);
+    path = (char*)calloc((strlen("/home//.fshell_historys")+strlen(username)),sizeof(char));
+    strlcpy(path, "/home/", count_for_strlcpy("/home"));
+    strcat(path,username);
+    strcat(path,"/.fshell_history");
     return path;
   }
   return NULL;
