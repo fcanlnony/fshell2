@@ -55,7 +55,7 @@ char* readline_history_path(char *username,char *path)
     return path;
   } else {
     path = (char*)calloc((strlen("/home//.fshell_historys")+strlen(username)),sizeof(char));
-    strlcpy(path, "/home/", count_for_strlcpy("/home"));
+    strlcpy(path, "/home/", count_for_strlcpy("/home/"));
     strcat(path,username);
     strcat(path,"/.fshell_history");
     return path;
