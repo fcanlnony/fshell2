@@ -4,6 +4,6 @@
 #include "array.h"
 
 extern short execvp_without_pipe(char **array);
-extern void execvp_with_pipe(pipe_t pipe_chain);
+extern short execvp_with_pipe(char **arrayA,char **arrayB);
 
 #endif /*FSHELL_EXEC_H_*/

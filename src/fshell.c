@@ -46,27 +46,41 @@ int main(int argc,char **argv)
 	char *array[] = {NULL};
 	array_parse(input, array);
 	execvp_without_pipe(array);
+      } else {
+	char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
+	pipe_t pipe_chain = array_pipe_parse(input, pipe_chain);
+	array_parse(pipe_chain->sentence, arrayA);
+	pipe_chain = pipe_chain->next;
+	array_parse(pipe_chain->sentence, arrayB);
+	execvp_with_pipe(arrayA,arrayB);
       }
     } else {
-      if(check_pipe(input) == false) {
-	cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
-	cmd_t current = cmd_chain;
-	char *array[] = {NULL};
-	while(1) {
-	  if(current->sentence != NULL) {
+      cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
+      cmd_t current = cmd_chain;
+      while(1) {
+	if(current->sentence != NULL) {
+	  if(check_pipe(current->sentence) == false) {
+	    char *array[] = {NULL};
 	    array_parse(current->sentence, array);
 	    execvp_without_pipe(array);
+	  } else {
+	    char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
+	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
+	    array_parse(pipe_chain->sentence, arrayA);
+	    pipe_chain = pipe_chain->next;
+	    array_parse(pipe_chain->sentence, arrayB);
+	    execvp_with_pipe(arrayA,arrayB);
 	  }
-	  if(current->next != NULL) {
-	    current = current->next;
-	  } else break;
-	}	
+	}
+	if(current->next != NULL) {
+	  current = current->next;
+	} else break;
       }
-      FREE_USERT_FUNC(input);
-      FREE_USERT_FUNC(prompt);
-      FREE_USERT_FUNC(user->username);
-      FREE_USERT_FUNC(user->userdir);
-      FREE_USERT_FUNC(user);
     }
+    FREE_USERT_FUNC(input);
+    FREE_USERT_FUNC(prompt);
+    FREE_USERT_FUNC(user->username);
+    FREE_USERT_FUNC(user->userdir);
+    FREE_USERT_FUNC(user);
   }
 }
