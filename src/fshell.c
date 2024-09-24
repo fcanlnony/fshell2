@@ -22,8 +22,29 @@ static void back_jump()
   longjmp(sig_back_while, 1);
 }
 
+_Noreturn void help()
+{  
+  printf("Options:\n\
+--version,-v print version\n\
+--help,-h get some help\n\
+--compile-time,-ct print the compilation time\n");
+  exit(0);
+}
+
 int main(int argc,char **argv)
 {
+  if(argc > 1) {
+    if(argc == 2) {
+      if(!strcmp(argv[1],"--version") || !strcmp(argv[1],"-v"))
+	PRINT_VERSION(SHELL_NAME, FSHELL_VERSION);
+      else if(!strcmp(argv[1],"--help") || !strcmp(argv[1],"-h"))
+	help();
+      else if(!strcmp(argv[1],"--compile-time") || !strcmp(argv[1],"-ct"))
+	printf("Time:%s Date:%s\n",__TIME__,__DATE__);
+      else printf("Unknow option :%s \n",argv[1]);
+    } else help();
+    exit(0);
+  }
   if(setjmp(sig_back_while))
     printf("\n");
   user_t user = NULL;
