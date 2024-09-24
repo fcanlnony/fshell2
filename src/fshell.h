@@ -4,6 +4,8 @@
 #define SHELL_NAME "fshell"
 #define FSHELL_VERSION "0.0.1"
 
+_Noreturn void help();
+
 #endif /*FSHELL2_H_*/
 
 #ifndef PRINT_VERSION
