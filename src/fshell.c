@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <wait.h>
 
 #include "fshell.h"
 #include "array.h"
@@ -35,6 +36,7 @@ int main(int argc,char **argv)
     signal(SIGINT,back_jump);
     signal(SIGSEGV,back_jump);
     user = init_user_information(getusername(), getcurrentdir(),user);
+    fflush(stdin);
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
     add_history(input);
@@ -57,6 +59,7 @@ int main(int argc,char **argv)
     } else {
       cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
       cmd_t current = cmd_chain;
+      char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
       while(1) {
 	if(current->sentence != NULL) {
 	  if(check_pipe(current->sentence) == false) {
@@ -64,12 +67,13 @@ int main(int argc,char **argv)
 	    array_parse(current->sentence, array);
 	    execvp_without_pipe(array);
 	  } else {
-	    char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
+	    //char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
 	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
 	    array_parse(pipe_chain->sentence, arrayA);
 	    pipe_chain = pipe_chain->next;
 	    array_parse(pipe_chain->sentence, arrayB);
 	    execvp_with_pipe(arrayA,arrayB);
+	    fflush(stdout);
 	  }
 	}
 	if(current->next != NULL) {
