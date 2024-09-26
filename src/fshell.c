@@ -88,7 +88,6 @@ int main(int argc,char **argv)
 	    array_parse(current->sentence, array);
 	    execvp_without_pipe(array);
 	  } else {
-	    //char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
 	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
 	    array_parse(pipe_chain->sentence, arrayA);
 	    pipe_chain = pipe_chain->next;
