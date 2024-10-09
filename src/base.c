@@ -30,16 +30,6 @@ user_t init_user_information(char *username, char *userdir,user_t user)
   return user;
 }
 
-char* getusername_b(user_t user)
-{
-  return user->username;
-}
-
-char* getcurrentdir_b(user_t user)
-{
-  return user->userdir;
-}
-
 char* fshell_prompt_readline(char *username,char *currentdir,char *prompt)
 {
   prompt = (char*)calloc((strlen(username)+strlen(currentdir)+strlen(" ")*4+strlen("[]")+strlen(">")*3),sizeof(char));

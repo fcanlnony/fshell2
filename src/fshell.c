@@ -10,11 +10,14 @@
 #include <setjmp.h>
 #include <wait.h>
 
+#include "alias.h"
 #include "fshell.h"
 #include "array.h"
 #include "base.h"
 #include "parse.h"
 #include "exec.h"
+#include "builtin.h"
+#include "memory.h"
 
 static jmp_buf sig_back_while;
 static void back_jump()
@@ -48,11 +51,15 @@ int main(int argc,char **argv)
   if(setjmp(sig_back_while))
     printf("\n");
   user_t user = NULL;
+  alias_t alias = init_alias(alias, " ", " ");
   char *readline_path = NULL;
-  if(check_root(getusername()) == true) 
-    readline_path = readline_history_path(getusername(), readline_path);
-  else readline_path = readline_history_path(getusername(), readline_path);
+  char *username = getusername();
+  if(check_root(username) == true) 
+    readline_path = readline_history_path(username, readline_path);
+  else readline_path = readline_history_path(username, readline_path);
   read_history(readline_path);
+  char *cd_history = NULL;
+  volatile short check_num;
   while(1) { 
     signal(SIGINT,back_jump);
     signal(SIGSEGV,back_jump);
@@ -68,30 +75,55 @@ int main(int argc,char **argv)
       if(check_pipe(input) == false) {
 	char *array[] = {NULL};
 	array_parse(input, array);
-	execvp_without_pipe(array);
+	check_num = check_builtin_cmd(array[0]);
+	if(check_num != NON_BUILTIN_CMD)
+	  exec_builtin_cmd(array, check_num, alias, user->username, cd_history);
+	else {
+	  char *alias_cmd = getalias_command(alias, array[0]);
+	  if(alias_cmd != NULL)
+	    array[0] = alias_cmd;
+	  execvp_without_pipe(array);
+	}
       } else {
 	char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
+	char *alias_cmd = NULL;
 	pipe_t pipe_chain = array_pipe_parse(input, pipe_chain);
 	array_parse(pipe_chain->sentence, arrayA);
+	alias_cmd = getalias_command(alias, arrayA[0]);
+	if(alias_cmd != NULL)
+	  arrayA[0] = alias_cmd;
 	pipe_chain = pipe_chain->next;
 	array_parse(pipe_chain->sentence, arrayB);
+	alias_cmd = getalias_command(alias, arrayB[0]);
+	if(alias_cmd != NULL)
+	  arrayB[0] = alias_cmd;
 	execvp_with_pipe(arrayA,arrayB);
       }
     } else {
       cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
       cmd_t current = cmd_chain;
       char *arrayA[20] = {NULL},*arrayB[20] = {NULL};
+      char *alias_cmd = NULL;
       while(1) {
 	if(current->sentence != NULL) {
 	  if(check_pipe(current->sentence) == false) {
 	    char *array[] = {NULL};
 	    array_parse(current->sentence, array);
+	    char *alias_cmd = getalias_command(alias, array[0]);
+	    if(alias_cmd != NULL)
+	      array[0] = alias_cmd;
 	    execvp_without_pipe(array);
 	  } else {
 	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
 	    array_parse(pipe_chain->sentence, arrayA);
+	    alias_cmd = getalias_command(alias, arrayA[0]);
+	    if(alias_cmd != NULL)
+	      arrayA[0] = alias_cmd;
 	    pipe_chain = pipe_chain->next;
 	    array_parse(pipe_chain->sentence, arrayB);
+	    alias_cmd = getalias_command(alias, arrayB[0]);
+	    if(alias_cmd != NULL)
+	      arrayB[0] = alias_cmd;
 	    execvp_with_pipe(arrayA,arrayB);
 	    fflush(stdout);
 	  }
@@ -101,6 +133,8 @@ int main(int argc,char **argv)
 	} else break;
       }
     }
+    cd_history = (char*)realloc(cd_history, strlen(user->userdir)*sizeof(char));
+    strlcpy(cd_history,user->userdir,count_for_strlcpy(user->userdir));
     FREE_USERT_FUNC(input);
     FREE_USERT_FUNC(prompt);
     FREE_USERT_FUNC(user->username);

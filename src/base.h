@@ -16,10 +16,6 @@ typedef user * user_t;
 
 extern user_t init_user_information(char *username,char *userdir,user_t user);
 
-extern char* getusername_b(user_t user);
-extern char* getcurrentdir_b(user_t user);
-/*the B scheme to get the username and dir */
-
 extern char* fshell_prompt_readline(char *username,char *currentdir,char *prompt);
 extern char* readline_history_path(char *username,char *path);
 
