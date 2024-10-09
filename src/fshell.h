@@ -2,7 +2,7 @@
 #define FSHELL2_H_
 
 #define SHELL_NAME "fshell"
-#define FSHELL_VERSION "0.0.1"
+#define FSHELL_VERSION "0.0.2"
 
 _Noreturn void help();
 
