@@ -16,8 +16,8 @@ typedef user * user_t;
 
 extern user_t init_user_information(char *username,char *userdir,user_t user);
 
-extern char* fshell_prompt_readline(char *username,char *currentdir,char *prompt);
-extern char* readline_history_path(char *username,char *path);
+extern char* fshell_prompt_readline(const char *username,const char *currentdir,char *prompt);
+extern char* readline_history_path(const char *username,char *path);
 
 #define MAX_DIR 256
 

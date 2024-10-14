@@ -4,7 +4,7 @@
 #include "alias.h"
 #include "memory.h"
 
-alias_t init_alias(alias_t alias_chain,char *alias_name,char *alias_command)
+alias_t init_alias(alias_t alias_chain,const char *alias_name,const char *alias_command)
 {
   alias_chain = (alias_t)malloc(sizeof(struct alias));
   char *alias_name_upload = (char*)calloc(strlen(alias_name),sizeof(char));
@@ -17,7 +17,7 @@ alias_t init_alias(alias_t alias_chain,char *alias_name,char *alias_command)
   return alias_chain;
 }
 
-alias_t upload_alias_node(alias_t alias_chain,char *alias_name,char *alias_command)
+alias_t upload_alias_node(alias_t alias_chain,const char *alias_name,const char *alias_command)
 {
   alias_t current = alias_chain;
   if(!strcmp(current->alias_name," ")) {
@@ -46,7 +46,7 @@ alias_t upload_alias_node(alias_t alias_chain,char *alias_name,char *alias_comma
   }
 }
 
-alias_t remove_alias_node(alias_t alias_chain, char *alias_name)
+alias_t remove_alias_node(alias_t alias_chain,const char *alias_name)
 {
   alias_t current = alias_chain,prev = alias_chain;
   current = current->next;
@@ -65,7 +65,7 @@ alias_t remove_alias_node(alias_t alias_chain, char *alias_name)
   return alias_chain;
 }
 
-char* getalias_command(alias_t alias_chain, char *alias_name)
+char* getalias_command(const alias_t alias_chain,const char *alias_name)
 {
   alias_t current = alias_chain;
   while(1) {

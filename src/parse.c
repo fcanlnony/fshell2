@@ -57,28 +57,28 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
   } else return NULL;
 }
 
-bool check_and(char *string)
+bool check_and(const char *string)
 {
   if(strstr(string, "&&") != NULL)
     return true;
   else return false;
 }
 
-bool check_pipe(char *string)
+bool check_pipe(const char *string)
 {
   if(strchr(string, '|') != NULL)
     return true;
   else return false;
 }
 
-bool check_builtin(char *string)
+bool check_builtin(const char *string)
 {
   if(!strcmp(string,"exit"))
     return true;
   else return false;
 }
 
-bool check_root(char *username)
+bool check_root(const char *username)
 {
   if(!strcmp(username,"root"))
     return true;

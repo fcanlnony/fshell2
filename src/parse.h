@@ -17,9 +17,9 @@ static inline void array_parse(char *string,char **array)
     array[++i] = strtok(NULL," ");
 }
 
-extern bool check_and(char *string);
-extern bool check_pipe(char *string);
-extern bool check_builtin(char *string);
-extern bool check_root(char *username);
+extern bool check_and(const char *string);
+extern bool check_pipe(const char *string);
+extern bool check_builtin(const char *string);
+extern bool check_root(const char *username);
 
 #endif /*FSHELL_PARSE_H_*/

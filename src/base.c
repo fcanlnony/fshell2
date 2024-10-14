@@ -22,7 +22,7 @@ char* getcurrentdir()
   return dir;
 }
 
-user_t init_user_information(char *username, char *userdir,user_t user)
+user_t init_user_information(char *username,char *userdir,user_t user)
 {
   user = (struct user_information*)malloc(sizeof(struct user_information));
   user->username = username;
@@ -30,14 +30,14 @@ user_t init_user_information(char *username, char *userdir,user_t user)
   return user;
 }
 
-char* fshell_prompt_readline(char *username,char *currentdir,char *prompt)
+char* fshell_prompt_readline(const char *username,const char *currentdir,char *prompt)
 {
   prompt = (char*)calloc((strlen(username)+strlen(currentdir)+strlen(" ")*4+strlen("[]")+strlen(">")*3),sizeof(char));
   sprintf(prompt, "%s [ %s ]\n>>> ",username,currentdir);
   return prompt;
 }
 
-char* readline_history_path(char *username,char *path)
+char* readline_history_path(const char *username,char *path)
 {
   if(!strcmp(username,"root")) {
     path = (char*)calloc(strlen("/root/.fshell_historys"),sizeof(char));
