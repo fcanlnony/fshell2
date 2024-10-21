@@ -16,6 +16,7 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       if(current == NULL)
 	return -1;
       unsigned short i = 0;
+      current = current->next;
       while(1) {
 	if(current->alias_name != NULL) {
 	  printf("%s => %s\n",current->alias_name,current->alias_command);
