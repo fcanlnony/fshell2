@@ -28,10 +28,10 @@ alias_t upload_alias_node(alias_t alias_chain,const char *alias_name,const char 
       return alias_chain;
     } else if(current->next != NULL)
       current = current->next;
-      else if(current->next == NULL) {
-	current->next = init_alias(current->next, alias_name, alias_command);
-	return alias_chain;
-      }
+    else if(current->next == NULL) {
+      current->next = init_alias(current->next, alias_name, alias_command);
+      return alias_chain;
+    }
   }
   return alias_chain;
 }
@@ -52,7 +52,7 @@ alias_t remove_alias_node(alias_t alias_chain,const char *alias_name)
 	current = current->next;
       } else return alias_chain;
     }
-    return alias_chain;
+  return alias_chain;
 }
 
 char* getalias_command(const alias_t alias_chain,const char *alias_name)
