@@ -32,8 +32,7 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
     } else printf("fshell : %s : Invalid parameter\n",array[1]);
   } else if(FLAG == CD_CMD_BUILTIN) {
     if(array[1] == NULL) {
-      if(!strcmp(username,"root"))
-	;
+      printf("cd : dir -> null; stop\n");
     }
     else if(!strncmp(array[1],"~",strlen("~")*sizeof(char))) {
       if(!strcmp(username,"root")) {
