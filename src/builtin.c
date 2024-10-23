@@ -37,7 +37,8 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
   } else if(FLAG == CD_CMD_BUILTIN) {
     if(array[1] == NULL) {
       printf("cd : dir -> null; stop\n");
-    }
+    } else if(array[2] != NULL)
+      printf("cd : too many parameters\n");
     else if(!strncmp(array[1],"~",strlen("~")*sizeof(char))) {
       if(!strcmp(username,"root")) {
 	char *tmp_dir = (char*)calloc(strlen(array[1])-strlen("~")+strlen("/root"), sizeof(char));
