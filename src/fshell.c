@@ -76,6 +76,14 @@ int main(int argc,char **argv)
     fflush(stdin);
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
+    if(!strcmp(input,"")) {
+      FREE_USERT_FUNC(input);
+      FREE_USERT_FUNC(prompt);
+      FREE_USERT_FUNC(user->username);
+      FREE_USERT_FUNC(user->userdir);
+      FREE_USERT_FUNC(user);
+      continue;
+    }
     add_history(input);
     write_history(readline_path);
     if(!strcmp(input, "exit"))
