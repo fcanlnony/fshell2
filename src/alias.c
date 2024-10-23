@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "alias.h"
 #include "memory.h"
@@ -40,6 +41,10 @@ alias_t remove_alias_node(alias_t alias_chain,const char *alias_name)
 {
   alias_t current = alias_chain,prev = alias_chain;
   current = current->next;
+  if(current == NULL) {
+    printf("fshell : unalias : no alias \n");
+    return alias_chain;
+  }
   while(1) {
       if(!strcmp(current->alias_name,alias_name)) {
 	prev->next = current->next;
