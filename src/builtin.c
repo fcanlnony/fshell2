@@ -11,14 +11,16 @@
 short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char *username,const char *cd_history)
 {
   if(FLAG == LIST_CMD_BUILTIN) {
-     if(!strcmp(array[1],"alias")) {
+    if(array[2] != NULL)
+      printf("fshell : list : too many parameters\n");
+    else if(!strcmp(array[1],"alias")) {
       alias_t current = head;
       if(current == NULL)
 	return -1;
       unsigned short i = 0;
       current = current->next;
       if(current == NULL) {
-	printf("fshell : alias : no alias\n");
+	printf("fshell : list : no alias\n");
 	return -1;
       }
       while(1) {
