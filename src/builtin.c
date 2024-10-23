@@ -84,13 +84,18 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       n += 1;
     }
   } else if(FLAG == PRINT_CMD_BUILTIN) {
-      char *tmp_put = getenv(array[1]),*tmp_put2 = getalias_command(head, array[1]);
+    unsigned short n = 1;
+    while(array[n] != NULL) {
+      char *tmp_put = getenv(array[n]),*tmp_put2 = getalias_command(head, array[n]);
       if(tmp_put != NULL)
 	printf("env : %s => %s\n",array[1],tmp_put);
-      else printf("env : %s : Invalid environment variable\n",array[1]);
+      else printf("env : %s : Invalid environment variable\n",array[n]);
       if(tmp_put2 != NULL)
 	printf("alias : %s => %s\n",array[1],tmp_put2);
-      else printf("alias : %s : Invalid alias variable\n",array[1]);
+      else printf("alias : %s : Invalid alias variable\n",array[n]);
+      printf("\n");
+      n += 1;
     }
+  }
   return 0;
 }
