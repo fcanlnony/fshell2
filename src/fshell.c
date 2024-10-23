@@ -19,10 +19,15 @@
 #include "builtin.h"
 #include "memory.h"
 
-static jmp_buf sig_back_while;
-static void back_jump()
+static jmp_buf sig_back_while,sig_stop_fshell;
+static void back_jump_sigINT()
 {
   longjmp(sig_back_while, 1);
+}
+
+static void back_jump_sigSEGV()
+{
+  longjmp(sig_stop_fshell, 1);
 }
 
 _Noreturn void help()
@@ -48,8 +53,6 @@ int main(int argc,char **argv)
     } else help();
     exit(0);
   }
-  if(setjmp(sig_back_while))
-    printf("\n");
   user_t user = NULL;
   alias_t alias = init_alias(alias, " ", " ");
   char *readline_path = NULL;
@@ -60,9 +63,15 @@ int main(int argc,char **argv)
   read_history(readline_path);
   char *cd_history = NULL;
   volatile short check_num;
+  if(setjmp(sig_stop_fshell)) {
+    printf("stop fshell\n");
+    exit(0);
+  }
+  if(setjmp(sig_back_while))
+    printf("\n");
   while(1) { 
-    signal(SIGINT,back_jump);
-    signal(SIGSEGV,back_jump);
+    signal(SIGINT,back_jump_sigINT);
+    signal(SIGSEGV,back_jump_sigSEGV);
     user = init_user_information(getusername(), getcurrentdir(),user);
     fflush(stdin);
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
