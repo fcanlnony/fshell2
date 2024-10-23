@@ -56,10 +56,8 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
 	chdir(tmp_dir);
 	free(tmp_dir);
       }
-    } else if(!strcmp(array[1],"....")) {
+    } else if(!strcmp(array[1],"...."))
       chdir(cd_history);
-      cd_history = getcurrentdir();
-    } 
   } else if(FLAG == ALIAS_CMD_BUILTIN) {
     if(array[3] != NULL)
       printf("fshell : alias : too many parameters\n");
