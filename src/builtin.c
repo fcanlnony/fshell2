@@ -59,8 +59,10 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
     } else if(!strcmp(array[1],"...."))
       chdir(cd_history);
   } else if(FLAG == ALIAS_CMD_BUILTIN) {
-    if(array[3] != NULL)
-      printf("fshell : alias : too many parameters\n");
+    if(array[2] == NULL || array[3] != NULL) {
+      printf("fshell : alias : unknown usage\n");
+      return -1;
+    }
     upload_alias_node(head, array[1], array[2]);
   } else if(FLAG == UNALIAS_CMD_BUILTIN) {
     unsigned short n = 1;
@@ -69,8 +71,8 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       n += 1;
     }
   } else if(FLAG == SET_ENV_CMD_BUILTIN) {
-    if(array[3] != NULL) {
-      printf("fshell : set : too many parameters\n");
+    if(array[2] == NULL || array[3] != NULL) {
+      printf("fshell : set : unknown usage\n");
       return -1;
     }
     char *tmp_env = (char*)calloc(strlen(array[1])+strlen(array[2])+strlen("="),sizeof(char));
