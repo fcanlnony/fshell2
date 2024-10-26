@@ -132,10 +132,15 @@ int main(int argc,char **argv)
 	  if(check_pipe(current->sentence) == false) {
 	    char *array[] = {NULL};
 	    array_parse(current->sentence, array);
-	    char *alias_cmd = getalias_command(alias, array[0]);
-	    if(alias_cmd != NULL)
-	      array[0] = alias_cmd;
-	    execvp_without_pipe(array);
+	    check_num = check_builtin_cmd(array[0]);
+	    if(check_num != NON_BUILTIN_CMD)
+	      exec_builtin_cmd(array, check_num, alias, user->username, cd_history);
+	    else {
+	      char *alias_cmd = getalias_command(alias, array[0]);
+	      if(alias_cmd != NULL)
+		array[0] = alias_cmd;
+	      execvp_without_pipe(array);
+	    }
 	  } else {
 	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
 	    array_parse(pipe_chain->sentence, arrayA);
