@@ -9,6 +9,7 @@
 #include <signal.h>
 #include <setjmp.h>
 #include <wait.h>
+#include <unistd.h>
 
 #include "alias.h"
 #include "fshell.h"
@@ -53,6 +54,8 @@ int main(int argc,char **argv)
     } else help();
     exit(0);
   }
+  signal(SIGINT,back_jump_sigINT);
+  signal(SIGSEGV,back_jump_sigSEGV);
   user_t user = NULL;
   alias_t alias = init_alias(alias, " ", " ");
   char *readline_path = NULL;
@@ -67,13 +70,8 @@ int main(int argc,char **argv)
     printf("stop fshell\n");
     exit(0);
   }
-  if(setjmp(sig_back_while))
-    printf("\n");
-  while(1) { 
-    signal(SIGINT,back_jump_sigINT);
-    signal(SIGSEGV,back_jump_sigSEGV);
+  while(1) {
     user = init_user_information(getusername(), getcurrentdir(),user);
-    fflush(stdin);
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
     if(!strcmp(input,"")) {
@@ -82,6 +80,14 @@ int main(int argc,char **argv)
       FREE_USERT_FUNC(user->username);
       FREE_USERT_FUNC(user->userdir);
       FREE_USERT_FUNC(user);
+      continue;
+    }
+    if(setjmp(sig_back_while)) {
+      FREE_USERT_FUNC(prompt);
+      FREE_USERT_FUNC(user->username);
+      FREE_USERT_FUNC(user->userdir);
+      FREE_USERT_FUNC(user);
+      printf("\n");
       continue;
     }
     add_history(input);
