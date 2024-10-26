@@ -11,8 +11,8 @@
 short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char *username,const char *cd_history)
 {
   if(FLAG == LIST_CMD_BUILTIN) {
-    if(array[2] != NULL)
-      printf("fshell : list : too many parameters\n");
+    if(array[1] == NULL || array[2] != NULL)
+      printf("fshell : list : unknown usage\n");
     else if(!strcmp(array[1],"alias")) {
       alias_t current = head;
       if(current == NULL)
