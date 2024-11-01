@@ -56,8 +56,11 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
 	chdir(tmp_dir);
 	free(tmp_dir);
       }
-    } else if(!strcmp(array[1],"...."))
-      chdir(cd_history);
+    } else if(!strcmp(array[1],"....")) {
+      if(cd_history != NULL) {
+	chdir(cd_history);
+      } else printf("fshell : cd : history path : null\n");
+    } else chdir(array[1]);
   } else if(FLAG == ALIAS_CMD_BUILTIN) {
     if(array[2] == NULL || array[3] != NULL) {
       printf("fshell : alias : unknown usage\n");
