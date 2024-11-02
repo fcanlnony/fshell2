@@ -56,7 +56,7 @@ int main(int argc,char **argv)
   }
   signal(SIGINT,back_jump_sigINT);
   signal(SIGSEGV,back_jump_sigSEGV);
-  user_t user = NULL;
+  user_t user = init_user_information(getusername(), getcurrentdir(),user);
   alias_t alias = init_alias(alias, " ", " ");
   char *readline_path = NULL;
   char *username = getusername();
@@ -71,24 +71,17 @@ int main(int argc,char **argv)
     exit(0);
   }
   while(1) {
-    user = init_user_information(getusername(), getcurrentdir(),user);
+    user = update_user_information_dir(getcurrentdir(), user);
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
     if(!strcmp(input,"")) {
       FREE_USERT_FUNC(input);
       FREE_USERT_FUNC(prompt);
-      FREE_USERT_FUNC(user->username);
-      FREE_USERT_FUNC(user->userdir);
-      FREE_USERT_FUNC(user);
       continue;
     }
     if(setjmp(sig_back_while)) {
       FREE_USERT_FUNC(prompt);
-      FREE_USERT_FUNC(user->username);
-      FREE_USERT_FUNC(user->userdir);
-      FREE_USERT_FUNC(user);
       printf("\n");
-      continue;
     }
     add_history(input);
     write_history(readline_path);
@@ -165,8 +158,5 @@ int main(int argc,char **argv)
     strlcpy(cd_history,user->userdir,count_for_strlcpy(user->userdir));
     FREE_USERT_FUNC(input);
     FREE_USERT_FUNC(prompt);
-    FREE_USERT_FUNC(user->username);
-    FREE_USERT_FUNC(user->userdir);
-    FREE_USERT_FUNC(user);
   }
 }
