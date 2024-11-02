@@ -81,9 +81,9 @@ int main(int argc,char **argv)
       continue;
     }
     if(setjmp(sig_back_while)) {
-      FREE_USERT_FUNC(prompt);
       FREE_USERT_FUNC(user->userdir);
       printf("\n");
+      continue;
     }
     add_history(input);
     write_history(readline_path);
