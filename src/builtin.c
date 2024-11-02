@@ -120,6 +120,7 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       break;
     }
     default:
-      return 0;
+      break;
     }
+  return 0;
 }
