@@ -22,12 +22,11 @@ char* getcurrentdir()
   return dir;
 }
 
-user_t init_user_information(const char *username,const char *userdir,user_t user)
+user_t init_user_information(const char *username,char *userdir,user_t user)
 {
   user = (struct user_information*)malloc(sizeof(struct user_information));
   user->username = username;
-  user->userdir = (char*)calloc(strlen(userdir),sizeof(char));
-  strlcpy(user->userdir,userdir,count_for_strlcpy(userdir));
+  user->userdir = userdir;
   return user;
 }
 
@@ -52,11 +51,4 @@ char* readline_history_path(const char *username,char *path)
     return path;
   }
   return NULL;
-}
-
-user_t update_user_information_dir(const char *userdir, user_t user)
-{
-  user->userdir = (char*)realloc(user->userdir, strlen(userdir)*sizeof(char));
-  strlcpy(user->userdir,userdir,count_for_strlcpy(userdir));
-  return user;
 }

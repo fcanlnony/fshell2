@@ -14,14 +14,12 @@ typedef struct user_information {
 
 typedef user * user_t;
 
-extern user_t init_user_information(const char *username,const char *userdir,user_t user);
+extern user_t init_user_information(const char *username,char *userdir,user_t user);
 
 extern char* fshell_prompt_readline(const char *username,const char *currentdir,char *prompt);
 extern char* readline_history_path(const char *username,char *path);
 
 #define MAX_DIR 256
-
-extern user_t update_user_information_dir(const char *userdir,user_t user);
 
 #endif /*FSHELL_BASE_H*/
 

@@ -71,16 +71,18 @@ int main(int argc,char **argv)
     exit(0);
   }
   while(1) {
-    user = update_user_information_dir(getcurrentdir(), user);
+    user->userdir = getcurrentdir();
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
     char *input = readline(prompt);
     if(!strcmp(input,"")) {
       FREE_USERT_FUNC(input);
       FREE_USERT_FUNC(prompt);
+      FREE_USERT_FUNC(user->userdir);
       continue;
     }
     if(setjmp(sig_back_while)) {
       FREE_USERT_FUNC(prompt);
+      FREE_USERT_FUNC(user->userdir);
       printf("\n");
     }
     add_history(input);
@@ -158,5 +160,6 @@ int main(int argc,char **argv)
     strlcpy(cd_history,user->userdir,count_for_strlcpy(user->userdir));
     FREE_USERT_FUNC(input);
     FREE_USERT_FUNC(prompt);
+    FREE_USERT_FUNC(user->userdir);
   }
 }
