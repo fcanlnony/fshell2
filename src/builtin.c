@@ -48,15 +48,12 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       else if(!strncmp(array[1],"~",strlen("~")*sizeof(char))) {
 	if(!strcmp(username,"root")) {
 	  char *tmp_dir = (char*)calloc(strlen(array[1])-strlen("~")+strlen("/root"), sizeof(char));
-	  strlcpy(tmp_dir, "/root", count_for_strlcpy("/root"));
-	  strcat(tmp_dir, array[1]+strlen("~")*sizeof(char));
+	  asprintf(&tmp_dir, "/root/%s", array[1]+strlen("~")*sizeof(char));
 	  chdir(tmp_dir);
 	  free(tmp_dir);
 	} else {
 	  char *tmp_dir = (char*)calloc(strlen(array[1])-strlen("~")+strlen(username)+strlen("/home/"),sizeof(char));
-	  strlcpy(tmp_dir, "/home/", count_for_strlcpy("/home/"));
-	  strcat(tmp_dir, username);
-	  strcat(tmp_dir, array[1]+strlen("~")*sizeof(char));
+	  asprintf(&tmp_dir, "/home/%s/%s", username, array[1]+strlen("~")*sizeof(char));
 	  chdir(tmp_dir);
 	  free(tmp_dir);
 	}
@@ -89,9 +86,7 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
 	return -1;
       }
       char *tmp_env = (char*)calloc(strlen(array[1])+strlen(array[2])+strlen("="),sizeof(char));
-      strlcpy(tmp_env,array[1],count_for_strlcpy(array[1]));
-      strcat(tmp_env,"=");
-      strcat(tmp_env,array[2]);
+      asprintf(&tmp_env, "%s=%s", array[1], array[2]);
       putenv(tmp_env);
       break;
     }
