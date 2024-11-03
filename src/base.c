@@ -33,10 +33,7 @@ user_t init_user_information(const char *username,char *userdir,user_t user)
 char* fshell_prompt_readline(const char *username,const char *currentdir,char *prompt)
 {
   prompt = (char*)calloc((strlen(username)+strlen(currentdir)+strlen(" ")*4+strlen("[]")+strlen(">")*3+sizeof('\n')),sizeof(char));
-  strlcpy(prompt, username, count_for_strlcpy(username));
-  strcat(prompt," [ ");
-  strcat(prompt,currentdir);
-  strcat(prompt," ]\n>>> ");
+  asprintf(&prompt, "%s [ %s ]\n>>> ", username, currentdir);
   return prompt;
 }
 
@@ -44,13 +41,11 @@ char* readline_history_path(const char *username,char *path)
 {
   if(!strcmp(username,"root")) {
     path = (char*)calloc(strlen("/root/.fshell_historys"),sizeof(char));
-    strncpy(path, "/root/.fshell_historys",sizeof(char)*strlen("/root/.fshell_historys"));
+    asprintf(&path, "/root/.fshell_historys");
     return path;
   } else {
     path = (char*)calloc((strlen("/home//.fshell_historys")+strlen(username)),sizeof(char));
-    strlcpy(path, "/home/", count_for_strlcpy("/home/"));
-    strcat(path,username);
-    strcat(path,"/.fshell_history");
+    asprintf(&path, "/home/%s/.fshell_historys",username);
     return path;
   }
   return NULL;
