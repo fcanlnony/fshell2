@@ -32,8 +32,11 @@ user_t init_user_information(const char *username,char *userdir,user_t user)
 
 char* fshell_prompt_readline(const char *username,const char *currentdir,char *prompt)
 {
-  prompt = (char*)calloc((strlen(username)+strlen(currentdir)+strlen(" ")*4+strlen("[]")+strlen(">")*3),sizeof(char));
-  sprintf(prompt, "%s [ %s ]\n>>> ",username,currentdir);
+  prompt = (char*)calloc((strlen(username)+strlen(currentdir)+strlen(" ")*4+strlen("[]")+strlen(">")*3+sizeof('\n')),sizeof(char));
+  strlcpy(prompt, username, count_for_strlcpy(username));
+  strcat(prompt," [ ");
+  strcat(prompt,currentdir);
+  strcat(prompt," ]\n>>> ");
   return prompt;
 }
 
