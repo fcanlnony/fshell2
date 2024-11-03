@@ -70,6 +70,10 @@ int main(int argc,char **argv)
     printf("stop fshell\n");
     exit(0);
   }
+  if(setjmp(sig_back_while)) {
+      FREE_USERT_FUNC(user->userdir);
+      printf("\n");
+  }
   while(1) {
     user->userdir = getcurrentdir();
     char *prompt = fshell_prompt_readline(user->username, user->userdir, prompt);
@@ -78,11 +82,6 @@ int main(int argc,char **argv)
       FREE_USERT_FUNC(input);
       FREE_USERT_FUNC(prompt);
       FREE_USERT_FUNC(user->userdir);
-      continue;
-    }
-    if(setjmp(sig_back_while)) {
-      FREE_USERT_FUNC(user->userdir);
-      printf("\n");
       continue;
     }
     add_history(input);
