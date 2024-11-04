@@ -33,7 +33,9 @@ user_t init_user_information(const char *username,char *userdir,user_t user)
 char* fshell_prompt_readline(const char *username,const char *currentdir,char *prompt)
 {
   prompt = (char*)calloc((strlen(username)+strlen(currentdir)+strlen(" ")*4+strlen("[]")+strlen(">")*3+sizeof('\n')),sizeof(char));
-  asprintf(&prompt, "%s [ %s ]\n>>> ", username, currentdir);
+  if(!strcmp(username,"root"))
+    asprintf(&prompt, "\033[1;31m%s [ \033[0m%s\033[1;31m ]\033[0m\n>>> ", username, currentdir);
+  else asprintf(&prompt, "\033[1;32m%s [ \033[0m%s\033[1;32m ]\033[0m\n>>> ", username, currentdir);
   return prompt;
 }
 
