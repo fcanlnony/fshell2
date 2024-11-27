@@ -2,10 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <wchar.h>
 
 #include "builtin.h"
 #include "alias.h"
 #include "base.h"
+#include "memory.h"
 
 short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char *username,const char *cd_history)
 {
@@ -64,11 +66,23 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       break;
     }
     case ALIAS_CMD_BUILTIN: {
-      if(array[2] == NULL || array[3] != NULL) {
+      if(array[2] == NULL) {
 	printf("fshell : alias : unknown usage\n");
 	return -1;
       }
-      upload_alias_node(head, array[1], array[2]);
+      if(array[3] == NULL)
+	upload_alias_node(head, array[1], array[2]);
+      else if(array[3] != NULL) {
+	unsigned int len = 0;
+	unsigned short i = 0;
+	for(i = 2;array[i] != NULL;i++)
+	  len += strlen(array[i]);
+	char *tmp_upload_alias = (char*)calloc(len+(i-2),sizeof(char));
+	strlcpy(tmp_upload_alias, array[2], count_for_strlcpy(array[2]));
+	for(i = 3;array[i] != NULL;i++)
+	  asprintf(&tmp_upload_alias, "%s %s",tmp_upload_alias,array[i]);
+	upload_alias_node(head, array[1], tmp_upload_alias);
+      }
       break;
     }
     case UNALIAS_CMD_BUILTIN: {

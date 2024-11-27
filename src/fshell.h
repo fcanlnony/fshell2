@@ -5,6 +5,7 @@
 #define FSHELL_VERSION "0.0.5"
 
 _Noreturn void help();
+unsigned short array_pipe_num = 0;
 
 #endif /*FSHELL2_H_*/
 
