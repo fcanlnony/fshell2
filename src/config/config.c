@@ -85,5 +85,4 @@ void fshell_init(alias_t head)
     }
     fclose(fp);
   }
-  printf("define:%d",FSHELL_INIT_FILE_ARRAY_NUM);
 }
