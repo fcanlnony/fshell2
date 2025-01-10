@@ -3,7 +3,8 @@
 #include <stdio.h>
 
 #include "alias.h"
-#include "memory.h"
+#include "include/memory.h"
+#include "include/type.h"
 
 alias_t init_alias(alias_t alias_chain,const char *alias_name,const char *alias_command)
 {

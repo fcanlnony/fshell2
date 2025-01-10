@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 #include "base.h"
-#include "memory.h"
+#include "include/memory.h"
 
 char* getusername()
 {

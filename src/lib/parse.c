@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "parse.h"
-#include "array.h"
-#include "memory.h"
+#include "../include/parse.h"
+#include "../include/array.h"
+#include "../include/memory.h"
 
 cmd_t array_chain_parse(char *input,cmd_t array_chain)
 {

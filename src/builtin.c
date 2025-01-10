@@ -7,7 +7,7 @@
 #include "builtin.h"
 #include "alias.h"
 #include "base.h"
-#include "memory.h"
+#include "include/memory.h"
 
 short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char *username,const char *cd_history)
 {

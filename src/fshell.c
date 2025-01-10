@@ -11,14 +11,16 @@
 #include <wait.h>
 #include <unistd.h>
 
+#include "include/array.h"
+#include "include/parse.h"
+#include "include/memory.h"
+#include "include/config.h"
+
 #include "alias.h"
 #include "fshell.h"
-#include "array.h"
 #include "base.h"
-#include "parse.h"
 #include "exec.h"
 #include "builtin.h"
-#include "memory.h"
 
 static jmp_buf sig_back_while,sig_stop_fshell;
 static void back_jump_sigINT()
@@ -65,7 +67,11 @@ int main(int argc,char **argv)
   else readline_path = readline_history_path(username, readline_path);
   read_history(readline_path);
   char *cd_history = NULL;
-  volatile short check_num;
+  fshell_init(alias);
+  if(getenv("FSHELL_PIPE_NUM") != NULL)
+    array_pipe_num = atoi(getenv("FSHELL_PIPE_NUM"));
+  else array_pipe_num = 0;
+  short check_num = 0;
   if(array_pipe_num == 0)
     array_pipe_num = 20;
   if(setjmp(sig_stop_fshell)) {
