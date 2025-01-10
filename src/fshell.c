@@ -127,9 +127,9 @@ int main(int argc,char **argv)
 	  }
 	}
       } else {
-	char *arrayA[array_pipe_num] = {},*arrayB[array_pipe_num] = {};
-	char *arrayA_alias[array_pipe_num] = {},*arrayA_alias_tmp[array_pipe_num] = {},*input_arrayA[array_pipe_num] = {};
-	char *arrayB_alias[array_pipe_num] = {},*arrayB_alias_tmp[array_pipe_num] = {},*input_arrayB[array_pipe_num] = {};
+	char *arrayA[array_pipe_num],*arrayB[array_pipe_num];
+	char *arrayA_alias[array_pipe_num],*arrayA_alias_tmp[array_pipe_num],*input_arrayA[array_pipe_num];
+	char *arrayB_alias[array_pipe_num],*arrayB_alias_tmp[array_pipe_num],*input_arrayB[array_pipe_num];
 	char *tmp_aliasA_cmd_copy = NULL,*tmp_aliasB_cmd_copy = NULL;
 	char *alias_cmd = NULL;
 	pipe_t pipe_chain = array_pipe_parse(input, pipe_chain);
@@ -220,9 +220,9 @@ int main(int argc,char **argv)
 	    }
 	  } else {
 	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
-	    char *arrayA[array_pipe_num] = {},*arrayB[array_pipe_num] = {};
-	    char *arrayA_alias[array_pipe_num] = {},*arrayA_alias_tmp[array_pipe_num] = {},*input_arrayA[array_pipe_num] = {};
-	    char *arrayB_alias[array_pipe_num] = {},*arrayB_alias_tmp[array_pipe_num] = {},*input_arrayB[array_pipe_num] = {};
+	    char *arrayA[array_pipe_num],*arrayB[array_pipe_num];
+	    char *arrayA_alias[array_pipe_num],*arrayA_alias_tmp[array_pipe_num],*input_arrayA[array_pipe_num];
+	    char *arrayB_alias[array_pipe_num],*arrayB_alias_tmp[array_pipe_num],*input_arrayB[array_pipe_num];
 	    char *tmp_aliasA_cmd_copy = NULL,*tmp_aliasB_cmd_copy = NULL;
 	    char *alias_cmd = NULL;
 	    char *copy_inputA = (char*)calloc(strlen(pipe_chain->sentence),sizeof(char));
