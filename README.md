@@ -25,5 +25,5 @@ __Example: set FSHELL_PIPE_NUM 20__
 * set x x - same usage as the builtin command
 
 #### Warning
-__The file is located at ${HOME}/.fshellrc__
-__The file is located at ${HOME}/.fshellrc__
+The file is located at ${HOME}/.fshellrc
+<br>The file is located at ${HOME}/.fshellrc
