@@ -23,4 +23,7 @@ _(can be left out if you don't know)_
 __Example: set FSHELL_PIPE_NUM 20__
 * alias x x - same usage as the builtin command
 * set x x - same usage as the builtin command
+
+#### Warning
+__The file is located at ${HOME}/.fshellrc__
 __The file is located at ${HOME}/.fshellrc__
