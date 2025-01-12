@@ -65,7 +65,8 @@ void fshell_init(alias_t head)
       copy = copy->next;
       copy->sentence = (char*)calloc(count_for_strlcpy(array), sizeof(char));
       strlcpy(copy->sentence, array, count_for_strlcpy(array));
-      copy->sentence[strlen(copy->sentence) - 1] = '\0';
+      if(copy->sentence[strlen(copy->sentence) - 1] == '\n')
+	copy->sentence[strlen(copy->sentence) - 1] = '\0';
       copy->next = NULL;
       free(array);
       array = (char*)calloc(getsize, sizeof(char));
@@ -79,9 +80,11 @@ void fshell_init(alias_t head)
       if(FLAG != NON_BUILTIN_CMD)
 	exec_builtin_cmd(array_sentence, FLAG, head, NULL, NULL);
       else printf("fshell: init file: error: %s FLAG %d\n", array_sentence[0], FLAG);
-      if(copy2->next != NULL)
-	copy2 = copy2->next;
-      else break;
+      if(copy2->next != NULL) {
+	if(strcmp(copy2->sentence,""))
+	  copy2 = copy2->next;
+	else break;
+      } else break;
     }
     fclose(fp);
   }

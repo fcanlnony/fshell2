@@ -10,6 +10,7 @@
 #define SET_ENV_CMD_BUILTIN 4
 #define UNSET_ENV_CMD_BUILTIN 5
 #define PRINT_CMD_BUILTIN 6
+#define LOAD_CMD_BUILTIN 7
 
 #define NON_BUILTIN_CMD -1
 
@@ -28,6 +29,8 @@ static inline short check_builtin_cmd(char *array) {
     return UNSET_ENV_CMD_BUILTIN;
   else if(!strcmp(array,"print"))
     return PRINT_CMD_BUILTIN;
+  else if(!strcmp(array,"load"))
+    return LOAD_CMD_BUILTIN;
   else return NON_BUILTIN_CMD;
 }
 
