@@ -28,4 +28,4 @@ _(can be left out if you don't know)_
 
 #### Warning
 * The file is located at ${HOME}/.fshellrc</p>
-* The file is located at ${HOME}/.fshellrc
+
