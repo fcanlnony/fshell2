@@ -135,50 +135,66 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       if(array[1] == NULL || array[2] != NULL)
 	printf("load : unknown usage");
       else {
-	int size = filesize(array[1]), line = fileline(array[1]),getsize;
-	FILE *fp = fopen(array[1], "r");
+	char *file_path = array[1];
+	int size = filesize(file_path), line, getsize;
+	FILE *fp = fopen(file_path, "r");
 	if(fp != NULL) {
-	  char *array = NULL;
-	  if(line >= 4) {
-	    array = (char*)calloc(size/2, sizeof(char));
-	    getsize = size/2;
-	  }
-	  else {
-	    array = (char*)calloc(size, sizeof(char));
-	    getsize = size;
-	  }
-	  cmd_t cmd = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
-	  cmd_t copy = cmd;
-	  copy->next = NULL;
-	  int i = 0;
-	  while(fgets(array, getsize, fp) != NULL) {
-	    copy->next = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
-	    copy = copy->next;
-	    copy->sentence = (char*)calloc(count_for_strlcpy(array), sizeof(char));
-	    strlcpy(copy->sentence, array, count_for_strlcpy(array));
-	    if(copy->sentence[strlen(copy->sentence) - 1] == '\n')
-	      copy->sentence[strlen(copy->sentence) - 1] = '\0';
+	  line = get_file_line(file_path);
+	  if(line > 1) {
+	    char *content = NULL;
+	    if(line >= 4) {
+	      content = (char*)calloc(size/2, sizeof(char));
+	      getsize = size/2;
+	    }
+	    else {
+	      content = (char*)calloc(size, sizeof(char));
+	      getsize = size;
+	    }
+	    cmd_t cmd = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
+	    cmd_t copy = cmd;
 	    copy->next = NULL;
-	    free(array);
-	    array = (char*)calloc(getsize, sizeof(char));
+	    int i = 0;
+	    while(fgets(content, getsize, fp) != NULL) {
+	      copy->next = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
+	      copy = copy->next;
+	      copy->sentence = (char*)calloc(count_for_strlcpy(content), sizeof(char));
+	      strlcpy(copy->sentence, content, count_for_strlcpy(content));
+	      if(copy->sentence[strlen(copy->sentence) - 1] == '\n')
+		copy->sentence[strlen(copy->sentence) - 1] = '\0';
+	      copy->next = NULL;
+	      free(content);
+	      content = (char*)calloc(getsize, sizeof(char));
+	    }
+	    cmd_t copy2 = cmd->next;
+	    int FLAG = NON_BUILTIN_CMD;
+	    char *array_sentence[FSHELL_INIT_FILE_ARRAY_NUM] = {NULL};
+	    while(copy2->sentence != NULL) {
+	      array_parse(copy2->sentence, array_sentence);
+	      FLAG = check_builtin_cmd(array_sentence[0]);
+	      if(FLAG != NON_BUILTIN_CMD)
+		exec_builtin_cmd(array_sentence, FLAG, head, NULL, NULL);
+	      else printf("fshell: init file: error: %s FLAG %d\n", array_sentence[0], FLAG);
+	      if(copy2->next != NULL) {
+		if(strcmp(copy2->sentence,""))
+		  copy2 = copy2->next;
+		else break;
+	      } else break;
+	    }
+	  } else {
+	    char *content = (char*)calloc(size, sizeof(char));
+	    if(fgets(content, size, fp) != NULL) {
+	      if(content[strlen(content) - 1] == '\n')
+		content[strlen(content) - 1] = '\0';
+	      char *array_content[FSHELL_INIT_FILE_ARRAY_NUM] = {NULL};
+	      array_parse(content, array_content);
+	      int FLAG = check_builtin_cmd(array_content[0]);
+	      if(FLAG != NON_BUILTIN_CMD)
+		exec_builtin_cmd(array_content, FLAG, head, NULL, NULL);
+	      else printf("fshell: init file: error: %s FLAG %d\n", array_content[0], FLAG);
+	    }
 	  }
-	  cmd_t copy2 = cmd->next;
-	  int FLAG = NON_BUILTIN_CMD;
-	  char *array_sentence[FSHELL_INIT_FILE_ARRAY_NUM] = {NULL};
-	  while(copy2->sentence != NULL) {
-	    array_parse(copy2->sentence, array_sentence);
-	    FLAG = check_builtin_cmd(array_sentence[0]);
-	    if(FLAG != NON_BUILTIN_CMD)
-	      exec_builtin_cmd(array_sentence, FLAG, head, NULL, NULL);
-	    else printf("fshell: init file: error: %s FLAG %d\n", array_sentence[0], FLAG);
-	    if(copy2->next != NULL) {
-	      if(strcmp(copy2->sentence,""))
-		copy2 = copy2->next;
-	      else break;
-	    } else break;
-	  }
-	  fclose(fp);
 	}
+	fclose(fp);
       }
       break;
     }

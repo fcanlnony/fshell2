@@ -4,11 +4,12 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../include/read.h"
 #include "../include/memory.h"
 
-unsigned short fileline(char *content)
+static unsigned short fileline(char *content)
 {
   int i = 0,j = 0,num = strlen(content);
   char copy[num];
@@ -38,4 +39,19 @@ unsigned short check_linefeed(const char *string, unsigned short i)
     string++;
   }
   return i;
+}
+
+unsigned short get_file_line(char *filepath)
+{
+  int config_file = open(filepath, O_RDONLY);
+  struct stat file_sb;
+  stat(filepath, &file_sb);
+  char *buf = (char*)calloc(file_sb.st_size / sizeof(char), sizeof(char));
+  if(read(config_file, buf, file_sb.st_size / sizeof(char)) == 0)
+    return 0;
+  else {
+    unsigned short line = fileline(buf);
+    free(buf);
+    return line;
+  }
 }
