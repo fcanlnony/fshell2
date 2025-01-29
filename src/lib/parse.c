@@ -14,7 +14,7 @@ cmd_t array_chain_parse(char *input,cmd_t array_chain)
   char *tmp_str = NULL;
   tmp_str = strtok(input,"&&");
   if(tmp_str != NULL) {
-    char *new = (char*)calloc(strlen(tmp_str),sizeof(char));
+    char *new = (char*)calloc(count_for_strlcpy(tmp_str),sizeof(char));
     strlcpy(new,tmp_str,count_for_strlcpy(tmp_str));
     current->sentence = new;
     while(1) {
@@ -22,7 +22,7 @@ cmd_t array_chain_parse(char *input,cmd_t array_chain)
       if(tmp_str != NULL) {
 	current->next = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
 	current = current->next;
-	char *new2 = (char*)calloc(strlen(tmp_str),sizeof(char));
+	char *new2 = (char*)calloc(count_for_strlcpy(tmp_str),sizeof(char));
 	strlcpy(new2,tmp_str,count_for_strlcpy(tmp_str));
 	current->sentence = new2;
 	current->next = NULL;
@@ -39,7 +39,7 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
   char *tmp_str = NULL;
   tmp_str = strtok(input,"|");
   if(tmp_str != NULL) {
-    char *new = (char*)calloc(strlen(tmp_str),sizeof(char));
+    char *new = (char*)calloc(count_for_strlcpy(tmp_str),sizeof(char));
     strlcpy(new,tmp_str,count_for_strlcpy(tmp_str));
     current->sentence = new;
     while(1) {
@@ -47,7 +47,7 @@ pipe_t array_pipe_parse(char *input,pipe_t pipe_chain)
       if(tmp_str != NULL) {
 	current->next = (pipe_t)malloc(sizeof(struct cmd_or_pipe_chain));
 	current = current->next;
-	char *new2 = (char*)calloc(strlen(tmp_str),sizeof(char));
+	char *new2 = (char*)calloc(count_for_strlcpy(tmp_str),sizeof(char));
 	strlcpy(new2,tmp_str,count_for_strlcpy(tmp_str));
 	current->sentence = new2;
 	current->next = NULL;

@@ -81,7 +81,7 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
 	unsigned short i = 0;
 	for(i = 2;array[i] != NULL;i++)
 	  len += strlen(array[i]);
-	char *tmp_upload_alias = (char*)calloc(len+(i-2),sizeof(char));
+	char *tmp_upload_alias = (char*)calloc(len,sizeof(char));
 	strlcpy(tmp_upload_alias, array[2], count_for_strlcpy(array[2]));
 	for(i = 3;array[i] != NULL;i++)
 	  asprintf(&tmp_upload_alias, "%s %s",tmp_upload_alias,array[i]);
@@ -143,11 +143,11 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
 	  if(line > 1) {
 	    char *content = NULL;
 	    if(line >= 4) {
-	      content = (char*)calloc(size/2, sizeof(char));
+	      content = (char*)calloc(size/2 + sizeof(char), sizeof(char));
 	      getsize = size/2;
 	    }
 	    else {
-	      content = (char*)calloc(size, sizeof(char));
+	      content = (char*)calloc(size + sizeof(char), sizeof(char));
 	      getsize = size;
 	    }
 	    cmd_t cmd = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));

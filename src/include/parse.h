@@ -1,7 +1,7 @@
 #ifndef FSHELL_PARSE_H
 #define FSHELL_PARSE_H
 
-#include "../include/array.h"
+#include "array.h"
 #include <stdbool.h>
 #include <string.h>
 

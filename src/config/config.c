@@ -25,11 +25,11 @@ void fshell_init(alias_t head)
     if(line > 1) {
       char *content = NULL;
       if(line >= 4) {
-	content = (char*)calloc(size/2, sizeof(char));
+	content = (char*)calloc(size/2 + sizeof(char), sizeof(char));
 	getsize = size/2;
       }
       else {
-	content = (char*)calloc(size, sizeof(char));
+	content = (char*)calloc(size + sizeof(char), sizeof(char));
 	getsize = size;
       }
       cmd_t cmd = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));

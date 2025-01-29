@@ -11,7 +11,7 @@
 
 static unsigned short fileline(char *content)
 {
-  int i = 0,j = 0,num = strlen(content);
+  int i = 0,j = 0,num = count_for_strlcpy(content);
   char copy[num];
   strlcpy(copy, content, count_for_strlcpy(content));
   while(copy[j] != EOF) {

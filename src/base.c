@@ -10,7 +10,7 @@
 char* getusername()
 {
   struct passwd *pwd = getpwuid(getuid());
-  char *username = (char*)calloc(strlen(pwd->pw_name),sizeof(char));
+  char *username = (char*)calloc(count_for_strlcpy(pwd->pw_name),sizeof(char));
   strlcpy(username,pwd->pw_name,count_for_strlcpy(pwd->pw_name));
   return username;
 }

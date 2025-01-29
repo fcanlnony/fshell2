@@ -3,16 +3,10 @@
 
 #include <pwd.h>
 #include <sys/types.h>
+#include "include/type.h"
 
 extern char* getusername();
 extern char* getcurrentdir();
-
-typedef struct user_information {
-  const char *username;
-  char *userdir;
-} user;
-
-typedef user * user_t;
 
 extern user_t init_user_information(const char *username,char *userdir,user_t user);
 

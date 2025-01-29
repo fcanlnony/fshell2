@@ -9,8 +9,8 @@
 alias_t init_alias(alias_t alias_chain,const char *alias_name,const char *alias_command)
 {
   alias_chain = (alias_t)malloc(sizeof(struct alias));
-  char *alias_name_upload = (char*)calloc(strlen(alias_name),sizeof(char));
-  char *alias_command_upload = (char*)calloc(strlen(alias_command),sizeof(char));
+  char *alias_name_upload = (char*)calloc(count_for_strlcpy(alias_name),sizeof(char));
+  char *alias_command_upload = (char*)calloc(count_for_strlcpy(alias_command),sizeof(char));
   strlcpy(alias_name_upload, alias_name, count_for_strlcpy(alias_name));
   strlcpy(alias_command_upload, alias_command, count_for_strlcpy(alias_command));
   alias_chain->alias_name = alias_name_upload;
@@ -24,7 +24,7 @@ alias_t upload_alias_node(alias_t alias_chain,const char *alias_name,const char 
   alias_t current = alias_chain;
   while(1) {
     if(!strcmp(current->alias_name,alias_name)) {
-      char *alias_command_upload = (char*)calloc(strlen(alias_command),sizeof(char));
+      char *alias_command_upload = (char*)calloc(count_for_strlcpy(alias_command),sizeof(char));
       strlcpy(alias_command_upload, alias_command, count_for_strlcpy(alias_command));
       current->alias_command = alias_command_upload;
       return alias_chain;
