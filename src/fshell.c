@@ -98,7 +98,7 @@ int main(int argc,char **argv)
       exit(0);
     if(check_and(input) == false) {
       if(check_pipe(input) == false) {
-	char *array[] = {NULL},*array_alias[] = {NULL},*array_alias_tmp[] = {NULL},*input_array[] = {NULL};
+	char *array[array_pipe_num],*array_alias[array_pipe_num],*array_alias_tmp[array_pipe_num],*input_array[array_pipe_num];
 	char *copy_input = (char*)calloc(count_for_strlcpy(input),sizeof(char));
 	strlcpy(copy_input, input, count_for_strlcpy(input));
 	array_parse(input, array);
@@ -185,12 +185,11 @@ int main(int argc,char **argv)
     } else {
       cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
       cmd_t current = cmd_chain;
-      char *arrayA[] = {NULL},*arrayB[] = {NULL};
       char *alias_cmd = NULL;
       while(1) {
 	if(current->sentence != NULL) {
 	  if(check_pipe(current->sentence) == false) {
-	    char *array[] = {NULL},*array_alias[] = {NULL},*array_alias_tmp[] = {NULL},*input_array[] = {NULL};
+	    char *array[array_pipe_num],*array_alias[array_pipe_num],*array_alias_tmp[array_pipe_num],*input_array[array_pipe_num];
 	    char *copy_input = (char*)calloc(count_for_strlcpy(input),sizeof(char));
 	    strlcpy(copy_input, current->sentence, count_for_strlcpy(current->sentence));
 	    array_parse(current->sentence, array);
