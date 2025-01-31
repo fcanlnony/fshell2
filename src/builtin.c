@@ -12,8 +12,9 @@
 #include "include/read.h"
 #include "include/parse.h"
 #include "include/config.h"
+#include "include/type.h"
 
-short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char *username,const char *cd_history)
+short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const char *username,const char *cd_history)
 {
   switch(FLAG)
     {
@@ -21,11 +22,8 @@ short exec_builtin_cmd(char **array, const short FLAG, alias_t head, const char 
       if(array[1] == NULL || array[2] != NULL)
 	printf("fshell : list : unknown usage\n");
       else if(!strcmp(array[1],"alias")) {
-	alias_t current = head;
-	if(current == NULL)
-	  return -1;
+	alias_t current = head->next;
 	unsigned short i = 0;
-	current = current->next;
 	if(current == NULL) {
 	  printf("fshell : list : no alias\n");
 	  return -1;

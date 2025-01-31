@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #include "../alias.h"
+#include "type.h"
 
 static inline char * get_fshell_config_path()
 {
@@ -25,7 +26,7 @@ static inline char * get_fshell_config_path()
   }
 }
 
-extern void fshell_init(alias_t head);
+extern void fshell_init(head_alias_t head);
 
 #endif /*FSHELL_CONFIG_H_*/
 

@@ -15,7 +15,7 @@
 #include "../include/memory.h"
 #include "../builtin.h"
 
-void fshell_init(alias_t head)
+void fshell_init(head_alias_t head)
 {
   char *file_path = get_fshell_config_path();
   int size = filesize(file_path), line, getsize;

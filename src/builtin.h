@@ -36,6 +36,6 @@ static inline short check_builtin_cmd(char *array) {
 
 #include "alias.h"
 #include "base.h"
-extern short exec_builtin_cmd(char **array,const short FLAG,alias_t head,const char *username,const char *cd_history);
+extern short exec_builtin_cmd(char **array,const short FLAG,head_alias_t head,const char *username,const char *cd_history);
 
 #endif /*FSHELL_BUILTIN_H_*/

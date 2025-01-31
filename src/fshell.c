@@ -21,6 +21,7 @@
 #include "base.h"
 #include "exec.h"
 #include "builtin.h"
+#include "include/type.h"
 
 static jmp_buf sig_back_while,sig_stop_fshell;
 static void back_jump_sigINT()
@@ -59,7 +60,7 @@ int main(int argc,char **argv)
   signal(SIGINT,back_jump_sigINT);
   signal(SIGSEGV,back_jump_sigSEGV);
   user_t user = init_user_information(getusername(), getcurrentdir(),user);
-  alias_t alias = init_alias(alias, " ", " ");
+  head_alias_t alias = init_alias_head(alias);
   char *readline_path = NULL;
   char *username = getusername();
   if(check_root(username) == true) 
