@@ -99,10 +99,7 @@ int main(int argc,char **argv)
       exit(0);
     if(check_and(input) == false) {
       if(check_pipe(input) == false) {
-	char **array = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **array_alias = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **array_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **input_array = (char**)calloc(array_pipe_num, sizeof(char*));
+	char *array[array_pipe_num],*array_alias[array_pipe_num],*array_alias_tmp[array_pipe_num],*input_array[array_pipe_num];
 	char *copy_input = (char*)calloc(count_for_strlcpy(input),sizeof(char));
 	strlcpy(copy_input, input, count_for_strlcpy(input));
 	array_parse(input, array);
@@ -125,25 +122,15 @@ int main(int argc,char **argv)
 	      for(k = 1;input_array[k] != NULL;i++,k++)
 		array_alias[i] = input_array[k];
 	    else array_alias[i] = NULL;
-	    fflush(stdout);
 	    execvp_without_pipe(array_alias);
 	    free(tmp_alias_cmd_copy);
 	    free(copy_input);
-	    FREE_USERT_FUNC(array);
-	    FREE_USERT_FUNC(array_alias);
-	    FREE_USERT_FUNC(array_alias_tmp);
-	    FREE_USERT_FUNC(input_array);
 	  }
 	}
       } else {
-	char **arrayA = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **arrayB = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **arrayA_alias = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **arrayA_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **input_arrayA = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **arrayB_alias = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **arrayB_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
-	char **input_arrayB = (char**)calloc(array_pipe_num, sizeof(char*));
+	char *arrayA[array_pipe_num],*arrayB[array_pipe_num];
+	char *arrayA_alias[array_pipe_num],*arrayA_alias_tmp[array_pipe_num],*input_arrayA[array_pipe_num];
+	char *arrayB_alias[array_pipe_num],*arrayB_alias_tmp[array_pipe_num],*input_arrayB[array_pipe_num];
 	char *tmp_aliasA_cmd_copy = NULL,*tmp_aliasB_cmd_copy = NULL;
 	char *alias_cmd = NULL;
 	pipe_t pipe_chain = array_pipe_parse(input, pipe_chain);
@@ -195,14 +182,6 @@ int main(int argc,char **argv)
 	  FREE_USERT_FUNC(tmp_aliasA_cmd_copy);
 	if(tmp_aliasB_cmd_copy != NULL)
 	  FREE_USERT_FUNC(tmp_aliasB_cmd_copy);
-	FREE_USERT_FUNC(arrayA);
-	FREE_USERT_FUNC(arrayB);
-	FREE_USERT_FUNC(arrayA_alias);
-	FREE_USERT_FUNC(arrayA_alias_tmp);
-	FREE_USERT_FUNC(input_arrayA);
-	FREE_USERT_FUNC(arrayB_alias);
-	FREE_USERT_FUNC(arrayB_alias_tmp);
-	FREE_USERT_FUNC(input_arrayB);
       }
     } else {
       cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
@@ -211,10 +190,7 @@ int main(int argc,char **argv)
       while(1) {
 	if(current->sentence != NULL) {
 	  if(check_pipe(current->sentence) == false) {
-	    char **array = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **array_alias = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **array_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **input_array = (char**)calloc(array_pipe_num, sizeof(char*));
+	    char *array[array_pipe_num],*array_alias[array_pipe_num],*array_alias_tmp[array_pipe_num],*input_array[array_pipe_num];
 	    char *copy_input = (char*)calloc(count_for_strlcpy(input),sizeof(char));
 	    strlcpy(copy_input, current->sentence, count_for_strlcpy(current->sentence));
 	    array_parse(current->sentence, array);
@@ -240,22 +216,13 @@ int main(int argc,char **argv)
 		execvp_without_pipe(array_alias);
 		free(tmp_alias_cmd_copy);
 		free(copy_input);
-		FREE_USERT_FUNC(array);
-		FREE_USERT_FUNC(array_alias);
-		FREE_USERT_FUNC(array_alias_tmp);
-		FREE_USERT_FUNC(input_array);
 	      }
 	    }
 	  } else {
 	    pipe_t pipe_chain = array_pipe_parse(current->sentence, pipe_chain);
-	    char **arrayA = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **arrayB = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **arrayA_alias = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **arrayA_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **input_arrayA = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **arrayB_alias = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **arrayB_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
-	    char **input_arrayB = (char**)calloc(array_pipe_num, sizeof(char*));
+	    char *arrayA[array_pipe_num],*arrayB[array_pipe_num];
+	    char *arrayA_alias[array_pipe_num],*arrayA_alias_tmp[array_pipe_num],*input_arrayA[array_pipe_num];
+	    char *arrayB_alias[array_pipe_num],*arrayB_alias_tmp[array_pipe_num],*input_arrayB[array_pipe_num];
 	    char *tmp_aliasA_cmd_copy = NULL,*tmp_aliasB_cmd_copy = NULL;
 	    char *alias_cmd = NULL;
 	    char *copy_inputA = (char*)calloc(count_for_strlcpy(pipe_chain->sentence),sizeof(char));
@@ -306,14 +273,6 @@ int main(int argc,char **argv)
 	      FREE_USERT_FUNC(tmp_aliasA_cmd_copy);
 	    if(tmp_aliasB_cmd_copy != NULL)
 	      FREE_USERT_FUNC(tmp_aliasB_cmd_copy);
-	    FREE_USERT_FUNC(arrayA);
-	    FREE_USERT_FUNC(arrayB);
-	    FREE_USERT_FUNC(arrayA_alias);
-	    FREE_USERT_FUNC(arrayA_alias_tmp);
-	    FREE_USERT_FUNC(input_arrayA);
-	    FREE_USERT_FUNC(arrayB_alias);
-	    FREE_USERT_FUNC(arrayB_alias_tmp);
-	    FREE_USERT_FUNC(input_arrayB);
 	  }
 	}
 	if(current->next != NULL)
