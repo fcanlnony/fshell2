@@ -75,5 +75,6 @@ void fshell_init(head_alias_t head)
       }
     }
   }
+  free(file_path);
   fclose(fp);
 }

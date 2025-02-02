@@ -15,12 +15,10 @@ static inline char * get_fshell_config_path()
   struct passwd *pwd = getpwuid(getuid());
   char *config_path;
   if(strcmp(pwd->pw_name,"root")) {
-    config_path = (char*)calloc(strlen(pwd->pw_name)+strlen("/home/")+strlen("/.fshellrc"),sizeof(char));
     asprintf(&config_path, "/home/%s/.fshellrc", pwd->pw_name);
     return config_path;
   }
   else {
-    config_path = (char*)calloc(strlen("/root/.fshellrc"),sizeof(char));
     asprintf(&config_path, "/root/.fshellrc");
     return config_path;
   }
