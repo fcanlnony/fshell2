@@ -39,3 +39,11 @@ static inline short check_builtin_cmd(char *array) {
 extern short exec_builtin_cmd(char **array,const short FLAG,head_alias_t head,const char *username,const char *cd_history);
 
 #endif /*FSHELL_BUILTIN_H_*/
+
+#ifdef FSHELL_32_BIT
+#define FSHELL_ENV_SIZE 1024
+#elif defined(FSHELL_64_BIT)
+#define FSHELL_ENV_SIZE 2048
+#else
+#define FSHELL_ENV_SIZE 1024
+#endif /*FSHELL_INIT_FILE_ARRAY_NUM*/

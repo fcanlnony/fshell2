@@ -50,15 +50,17 @@ short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const 
 	printf("cd : too many parameters\n");
       else if(!strncmp(array[1],"~",strlen("~")*sizeof(char))) {
 	if(!strcmp(username,"root")) {
-	  char *tmp_dir = (char*)calloc(strlen(array[1])-strlen("~")+strlen("/root"), sizeof(char));
+	  char *tmp_dir = NULL;
 	  asprintf(&tmp_dir, "/root/%s", array[1]+strlen("~")*sizeof(char));
 	  chdir(tmp_dir);
-	  free(tmp_dir);
+	  if(tmp_dir != NULL)
+	    free(tmp_dir);
 	} else {
-	  char *tmp_dir = (char*)calloc(strlen(array[1])-strlen("~")+strlen(username)+strlen("/home/"),sizeof(char));
+	  char *tmp_dir = NULL;
 	  asprintf(&tmp_dir, "/home/%s/%s", username, array[1]+strlen("~")*sizeof(char));
 	  chdir(tmp_dir);
-	  free(tmp_dir);
+	  if(tmp_dir != NULL)
+	    free(tmp_dir);
 	}
       } else if(!strcmp(array[1],"....")) {
 	if(cd_history != NULL) {
@@ -75,12 +77,9 @@ short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const 
       if(array[3] == NULL)
 	upload_alias_node(head, array[1], array[2]);
       else if(array[3] != NULL) {
-	unsigned int len = 0;
 	unsigned short i = 0;
-	for(i = 2;array[i] != NULL;i++)
-	  len += strlen(array[i]);
-	char *tmp_upload_alias = (char*)calloc(len,sizeof(char));
-	strlcpy(tmp_upload_alias, array[2], count_for_strlcpy(array[2]));
+	char *tmp_upload_alias = NULL;
+	asprintf(&tmp_upload_alias, "%s", array[2]);
 	for(i = 3;array[i] != NULL;i++)
 	  asprintf(&tmp_upload_alias, "%s %s",tmp_upload_alias,array[i]);
 	upload_alias_node(head, array[1], tmp_upload_alias);
@@ -100,8 +99,8 @@ short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const 
 	printf("fshell : set : unknown usage\n");
 	return -1;
       }
-      char *tmp_env = (char*)calloc(strlen(array[1])+strlen(array[2])+strlen("="),sizeof(char));
-      asprintf(&tmp_env, "%s=%s", array[1], array[2]);
+      static char tmp_env[FSHELL_ENV_SIZE];
+      snprintf(tmp_env, FSHELL_ENV_SIZE, "%s=%s", array[1], array[2]);
       putenv(tmp_env);
       break;
     }

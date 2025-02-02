@@ -1,5 +1,5 @@
 NAME=fshell
-CFLAGS = -std=c17 $(shell pkg-config --cflags --libs readline) -O2 -I./ -I./include -I./config
+CFLAGS = -std=c17 $(shell pkg-config --cflags --libs readline) -O2 -I./ -I./include -I./config -D FSHELL_64_BIT
 CC = gcc
 DEBUG = -pg -g -Wall
 LINK = lib/*.o config/*.o
