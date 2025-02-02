@@ -144,12 +144,11 @@ int main(int argc,char **argv)
 	char **arrayB_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
 	char **input_arrayB = (char**)calloc(array_pipe_num, sizeof(char*));
 	char *tmp_aliasA_cmd_copy = NULL,*tmp_aliasB_cmd_copy = NULL;
-	char *alias_cmd = NULL;
 	pipe_t pipe_chain = array_pipe_parse(input, pipe_chain);
 	char *copy_inputA = (char*)calloc(count_for_strlcpy(pipe_chain->sentence),sizeof(char));
 	strlcpy(copy_inputA, pipe_chain->sentence, count_for_strlcpy(pipe_chain->sentence));
 	array_parse(pipe_chain->sentence, arrayA);
-	alias_cmd = getalias_command(alias, arrayA[0]);
+	char *alias_cmd = getalias_command(alias, arrayA[0]);
 	if(alias_cmd == NULL) {
 	  array_parse(copy_inputA, arrayA_alias);
 	} else {
@@ -206,7 +205,6 @@ int main(int argc,char **argv)
     } else {
       cmd_t cmd_chain = array_chain_parse(input, cmd_chain);
       cmd_t current = cmd_chain;
-      char *alias_cmd = NULL;
       while(1) {
 	if(current->sentence != NULL) {
 	  if(check_pipe(current->sentence) == false) {
@@ -256,11 +254,10 @@ int main(int argc,char **argv)
 	    char **arrayB_alias_tmp = (char**)calloc(array_pipe_num, sizeof(char*));
 	    char **input_arrayB = (char**)calloc(array_pipe_num, sizeof(char*));
 	    char *tmp_aliasA_cmd_copy = NULL,*tmp_aliasB_cmd_copy = NULL;
-	    char *alias_cmd = NULL;
 	    char *copy_inputA = (char*)calloc(count_for_strlcpy(pipe_chain->sentence),sizeof(char));
 	    strlcpy(copy_inputA, pipe_chain->sentence, count_for_strlcpy(pipe_chain->sentence));
 	    array_parse(pipe_chain->sentence, arrayA);
-	    alias_cmd = getalias_command(alias, arrayA[0]);
+	    char *alias_cmd = getalias_command(alias, arrayA[0]);
 	    if(alias_cmd == NULL) {
 	      array_parse(copy_inputA, arrayA_alias);
 	    } else {
