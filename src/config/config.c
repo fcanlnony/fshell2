@@ -35,7 +35,6 @@ void fshell_init(head_alias_t head)
       cmd_t cmd = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
       cmd_t copy = cmd;
       copy->next = NULL;
-      int i = 0;
       while(fgets(content, getsize, fp) != NULL) {
 	copy->next = (cmd_t)malloc(sizeof(struct cmd_or_pipe_chain));
 	copy = copy->next;
