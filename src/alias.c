@@ -22,8 +22,10 @@ static alias_t init_alias(alias_t alias_chain,const char *alias_name,const char 
 head_alias_t init_alias_head(head_alias_t alias_head)
 {
   alias_head = (head_alias_t)malloc(sizeof(struct head_alias));
-  alias_head->next = NULL;
-  return alias_head;
+  if(alias_head != NULL) {
+    alias_head->next = NULL;
+    return alias_head;
+  } else return NULL;
 }
 
 head_alias_t upload_alias_node(head_alias_t alias_head,const char *alias_name,const char *alias_command)
