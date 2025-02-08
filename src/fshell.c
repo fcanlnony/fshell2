@@ -62,17 +62,16 @@ int main(int argc,char **argv)
   user_t user = init_user_information(getusername(), getcurrentdir(),user);
   head_alias_t alias = init_alias_head(alias);
   char *readline_path = NULL;
-  char *username = getusername();
-  if(check_root(username) == true) 
-    readline_path = readline_history_path(username, readline_path);
-  else readline_path = readline_history_path(username, readline_path);
+  if(check_root(user->username) == true) 
+    readline_path = readline_history_path(user->username, readline_path);
+  else readline_path = readline_history_path(user->username, readline_path);
   read_history(readline_path);
   char *cd_history = NULL;
   fshell_init(alias);
   if(getenv("FSHELL_PIPE_NUM") != NULL)
     array_pipe_num = atoi(getenv("FSHELL_PIPE_NUM"));
   else array_pipe_num = 0;
-  short check_num = 0;
+  volatile short check_num = 0;
   if(array_pipe_num == 0)
     array_pipe_num = 20;
   if(setjmp(sig_stop_fshell)) {
