@@ -45,9 +45,9 @@ short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const 
     }
     case CD_CMD_BUILTIN: {
       if(array[1] == NULL) {
-	printf("cd: dir -> null; stop\n");
+	printf("fshell: cd: dir -> null; stop\n");
       } else if(array[2] != NULL)
-	printf("cd: too many parameters\n");
+	printf("fshell: cd: too many parameters\n");
       else if(!strncmp(array[1],"~",strlen("~")*sizeof(char))) {
 	char *tmp_dir = NULL;
 	if(!strcmp(username,"root"))
@@ -135,7 +135,7 @@ short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const 
     }
     case LOAD_CMD_BUILTIN: {
       if(array[1] == NULL || array[2] != NULL)
-	printf("load: unknown usage\n");
+	printf("fshell: load: unknown usage\n");
       else {
 	char *file_path = array[1];
 	int size = filesize(file_path), line, getsize;
