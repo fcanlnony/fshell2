@@ -61,10 +61,7 @@ int main(int argc,char **argv)
   signal(SIGSEGV,back_jump_sigSEGV);
   user_t user = init_user_information(getusername(), getcurrentdir(),user);
   head_alias_t alias = init_alias_head(alias);
-  char *readline_path = NULL;
-  if(check_root(user->username) == true) 
-    readline_path = readline_history_path(user->username, readline_path);
-  else readline_path = readline_history_path(user->username, readline_path);
+  char *readline_path = readline_history_path(user->username, readline_path);
   read_history(readline_path);
   char *cd_history = NULL;
   fshell_init(alias);
