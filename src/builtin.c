@@ -189,8 +189,8 @@ short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const 
 	      else printf("fshell: init file: error: %s FLAG %d\n", array_content[0], FLAG);
 	    }
 	  }
+	  fclose(fp);
 	}
-	fclose(fp);
       }
       break;
     }

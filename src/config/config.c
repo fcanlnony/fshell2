@@ -74,7 +74,7 @@ void fshell_init(head_alias_t head)
 	else printf("fshell: init file: error: %s FLAG %d\n", array[0], FLAG);
       }
     }
+    fclose(fp);
   }
   free(file_path);
-  fclose(fp);
 }
