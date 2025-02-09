@@ -26,13 +26,15 @@ void execvp_with_pipe(char **arrayA,char **arrayB)
     pid_t child = fork();
     if(child == 0) {
       close(pipefd[1]);
-      dup2(pipefd[0],0);
+      dup2(pipefd[0],STDIN_FILENO);
+      close(pipefd[0]);
       if(execvp(arrayB[0],arrayB) < 0)
 	fprintf(stderr, "fshell : %s : command not found.\n", arrayB[0]);
       exit(EXIT_SUCCESS);
     } else if(child > 0) {
       close(pipefd[0]);
-      dup2(pipefd[1],1);
+      dup2(pipefd[1],STDOUT_FILENO);
+      close(pipefd[1]);
       if(execvp(arrayA[0],arrayA) < 0)
 	fprintf(stderr, "fshell : %s : command not found.\n", arrayA[0]);
       exit(EXIT_SUCCESS);
