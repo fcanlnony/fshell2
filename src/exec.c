@@ -5,20 +5,19 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-short execvp_without_pipe(char **array)
+void execvp_without_pipe(char **array)
 {
   pid_t pid = fork();
   if(pid < 0)
-    return -1;
+    exit(EXIT_FAILURE);
   else if(pid == 0) {
     if(execvp(array[0],array) < 0)
       fprintf(stderr, "fshell : %s : command not found.\n", array[0]);
-    exit(0);
-  } else wait(NULL);
-  return 0;
+    exit(EXIT_SUCCESS);
+  } else waitpid(pid, NULL, 0);
 }
 
-short execvp_with_pipe(char **arrayA,char **arrayB)
+void execvp_with_pipe(char **arrayA,char **arrayB)
 {
   pid_t parent = fork();
   if(parent == 0) {
@@ -30,15 +29,14 @@ short execvp_with_pipe(char **arrayA,char **arrayB)
       dup2(pipefd[0],0);
       if(execvp(arrayB[0],arrayB) < 0)
 	fprintf(stderr, "fshell : %s : command not found.\n", arrayB[0]);
-      exit(0);
+      exit(EXIT_SUCCESS);
     } else if(child > 0) {
       close(pipefd[0]);
       dup2(pipefd[1],1);
       if(execvp(arrayA[0],arrayA) < 0)
 	fprintf(stderr, "fshell : %s : command not found.\n", arrayA[0]);
-      exit(0);
+      exit(EXIT_SUCCESS);
     }
   } else if(parent > 0)
     wait(NULL);
-  return 0;
 }
