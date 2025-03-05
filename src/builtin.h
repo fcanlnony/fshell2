@@ -14,37 +14,32 @@
 
 #define NON_BUILTIN_CMD -1
 
-static inline short
-check_builtin_cmd(char* array)
+static inline short check_builtin_cmd(char *array)
 {
-  if (!strcmp(array, "list"))
-    return LIST_CMD_BUILTIN;
-  else if (!strcmp(array, "cd"))
-    return CD_CMD_BUILTIN;
-  else if (!strcmp(array, "alias"))
-    return ALIAS_CMD_BUILTIN;
-  else if (!strcmp(array, "unalias"))
-    return UNALIAS_CMD_BUILTIN;
-  else if (!strcmp(array, "set"))
-    return SET_ENV_CMD_BUILTIN;
-  else if (!strcmp(array, "unset"))
-    return UNSET_ENV_CMD_BUILTIN;
-  else if (!strcmp(array, "print"))
-    return PRINT_CMD_BUILTIN;
-  else if (!strcmp(array, "load"))
-    return LOAD_CMD_BUILTIN;
-  else
-    return NON_BUILTIN_CMD;
+    if (!strcmp(array, "list"))
+        return LIST_CMD_BUILTIN;
+    else if (!strcmp(array, "cd"))
+        return CD_CMD_BUILTIN;
+    else if (!strcmp(array, "alias"))
+        return ALIAS_CMD_BUILTIN;
+    else if (!strcmp(array, "unalias"))
+        return UNALIAS_CMD_BUILTIN;
+    else if (!strcmp(array, "set"))
+        return SET_ENV_CMD_BUILTIN;
+    else if (!strcmp(array, "unset"))
+        return UNSET_ENV_CMD_BUILTIN;
+    else if (!strcmp(array, "print"))
+        return PRINT_CMD_BUILTIN;
+    else if (!strcmp(array, "load"))
+        return LOAD_CMD_BUILTIN;
+    else
+        return NON_BUILTIN_CMD;
 }
 
 #include "alias.h"
 #include "base.h"
-extern short
-exec_builtin_cmd(char** array,
-                 const short FLAG,
-                 head_alias_t head,
-                 const char* username,
-                 const char* cd_history);
+extern short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const char *username,
+                              const char *cd_history);
 
 #endif /*FSHELL_BUILTIN_H_*/
 

@@ -6,20 +6,13 @@
 
 #include "include/type.h"
 
-extern char*
-getusername();
-extern char*
-getcurrentdir();
+extern char *getusername();
+extern char *getcurrentdir();
 
-extern user_t
-init_user_information(const char* username, char* userdir, user_t user);
+extern user_t init_user_information(const char *username, char *userdir, user_t user);
 
-extern char*
-fshell_prompt_readline(const char* username,
-                       const char* currentdir,
-                       char* prompt);
-extern char*
-readline_history_path(const char* username, char* path);
+extern char *fshell_prompt_readline(const char *username, const char *currentdir, char *prompt);
+extern char *readline_history_path(const char *username, char *path);
 
 #define MAX_DIR 256
 
