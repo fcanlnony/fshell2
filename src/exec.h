@@ -3,7 +3,9 @@
 
 #include "include/array.h"
 
-extern void execvp_without_pipe (char **array);
-extern void execvp_with_pipe (char **arrayA, char **arrayB);
+extern void
+execvp_without_pipe(char** array);
+extern void
+execvp_with_pipe(char** arrayA, char** arrayB);
 
 #endif /*FSHELL_EXEC_H_*/
