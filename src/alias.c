@@ -9,8 +9,9 @@
 static alias_t init_alias(alias_t alias_chain, const char *alias_name, const char *alias_command)
 {
     alias_chain = (alias_t)malloc(sizeof(struct alias));
-    alias_chain->alias_name = mstrcpy(alias_chain->alias_name, alias_name);
-    alias_chain->alias_command = mstrcpy(alias_chain->alias_command, alias_command);
+    char *alias_name_upload = NULL, *alias_command_upload = NULL;
+    alias_chain->alias_name = mstrcpy(alias_name_upload, alias_name);
+    alias_chain->alias_command = mstrcpy(alias_command_upload, alias_command);
     alias_chain->next = NULL;
     return alias_chain;
 }
@@ -36,7 +37,7 @@ head_alias_t upload_alias_node(head_alias_t alias_head, const char *alias_name, 
         {
             if (!strcmp(current->alias_name, alias_name))
             {
-	      current->alias_command = mstrcpy(current->alias_command, alias_command);
+                current->alias_command = mstrcpy(current->alias_command, alias_command);
                 return alias_head;
             }
             else if (current->next != NULL)
