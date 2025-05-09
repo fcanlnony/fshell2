@@ -1,5 +1,5 @@
-#ifndef FSHELL_ARRAY_H_
-#define FSHELL_ARRAY_H_
+#ifndef _FSHELL_ARRAY_H_
+#define _FSHELL_ARRAY_H_
 
 typedef struct cmd_or_pipe_chain
 {
@@ -10,4 +10,4 @@ typedef struct cmd_or_pipe_chain
 typedef cmd_or_pipe_chain_t *cmd_t;
 typedef cmd_or_pipe_chain_t *pipe_t;
 
-#endif /*FSHELL_ARRAY_H_*/
+#endif /*_FSHELL_ARRAY_H_*/

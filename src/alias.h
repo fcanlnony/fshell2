@@ -1,5 +1,5 @@
-#ifndef FSHELL_ALIAS_H_
-#define FSHELL_ALIAS_H_
+#ifndef _FSHELL_ALIAS_H_
+#define _FSHELL_ALIAS_H_
 
 #include "include/type.h"
 
@@ -8,4 +8,4 @@ extern head_alias_t upload_alias_node(head_alias_t alias_head, const char *alias
 extern head_alias_t remove_alias_node(head_alias_t alias_head, const char *alias_name);
 extern char *getalias_command(const head_alias_t alias_head, const char *alias_name);
 
-#endif /*FSHELL_ALIAS_H_*/
+#endif /*_FSHELL_ALIAS_H_*/

@@ -1,5 +1,5 @@
-#ifndef FSHELL_MEMORY_H_
-#define FSHELL_MEMORY_H_
+#ifndef _FSHELL_MEMORY_H_
+#define _FSHELL_MEMORY_H_
 
 #include <stdlib.h>
 #include <string.h>
@@ -11,4 +11,4 @@ static inline unsigned short count_for_strlcpy(const char *pointer)
 
 extern char *mstrcpy(char *dest, const char *src);
 
-#endif /*FSHELL_MEMORY_H_*/
+#endif /*_FSHELL_MEMORY_H_*/

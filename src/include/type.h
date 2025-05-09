@@ -1,5 +1,5 @@
-#ifndef FSHELL_TYPE_H
-#define FSHELL_TYPE_H
+#ifndef _FSHELL_TYPE_H
+#define _FSHELL_TYPE_H
 
 struct alias
 {
@@ -22,4 +22,4 @@ struct head_alias
 };
 typedef struct head_alias *head_alias_t;
 
-#endif /*FSHELL_TYPE_H*/
+#endif /*_FSHELL_TYPE_H*/

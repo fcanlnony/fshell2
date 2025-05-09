@@ -1,5 +1,5 @@
-#ifndef FSHELL_BUILTIN_H_
-#define FSHELL_BUILTIN_H_
+#ifndef _FSHELL_BUILTIN_H_
+#define _FSHELL_BUILTIN_H_
 
 #include <string.h>
 
@@ -41,7 +41,7 @@ static inline short check_builtin_cmd(char *array)
 extern short exec_builtin_cmd(char **array, const short FLAG, head_alias_t head, const char *username,
                               const char *cd_history);
 
-#endif /*FSHELL_BUILTIN_H_*/
+#endif /*_FSHELL_BUILTIN_H_*/
 
 #ifdef FSHELL_32_BIT
 #define FSHELL_ENV_SIZE 1024

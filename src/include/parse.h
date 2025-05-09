@@ -1,5 +1,5 @@
-#ifndef FSHELL_PARSE_H
-#define FSHELL_PARSE_H
+#ifndef _FSHELL_PARSE_H
+#define _FSHELL_PARSE_H
 
 #include "array.h"
 #include <stdbool.h>
@@ -23,4 +23,4 @@ extern bool check_root(const char *username);
 #define array_chain_parse(input, array_chain) (array_vanilla_parse(input, array_chain, "&&"))
 #define array_pipe_parse(input, pipe_chain) (array_vanilla_parse(input, pipe_chain, "|"))
 
-#endif /*FSHELL_PARSE_H_*/
+#endif /*_FSHELL_PARSE_H_*/

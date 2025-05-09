@@ -1,10 +1,9 @@
-#ifndef FSHELL_BASE_H
-#define FSHELL_BASE_H
-
-#include <pwd.h>
-#include <sys/types.h>
+#ifndef _FSHELL_BASE_H_
+#define _FSHELL_BASE_H_
 
 #include "include/type.h"
+#include <pwd.h>
+#include <sys/types.h>
 
 extern char *getusername();
 extern char *getcurrentdir();
@@ -16,7 +15,7 @@ extern char *readline_history_path(const char *username, char *path);
 
 #define MAX_DIR 256
 
-#endif /*FSHELL_BASE_H*/
+#endif /*_FSHELL_BASE_H_*/
 
 #ifndef FREE_USERT_FUNC
 #define FREE_USERT_FUNC(X) (free(X), X = NULL)

@@ -1,5 +1,5 @@
-#ifndef FSHELL_CONFIG_H_
-#define FSHELL_CONFIG_H_
+#ifndef _FSHELL_CONFIG_H_
+#define _FSHELL_CONFIG_H_
 
 #include <pwd.h>
 #include <stdio.h>
@@ -28,7 +28,7 @@ static inline char *get_fshell_config_path()
 
 extern void fshell_init(head_alias_t head);
 
-#endif /*FSHELL_CONFIG_H_*/
+#endif /*_FSHELL_CONFIG_H_*/
 
 #ifdef FSHELL_32_BIT
 #define FSHELL_INIT_FILE_ARRAY_NUM 20
