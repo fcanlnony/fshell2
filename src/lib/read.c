@@ -1,5 +1,3 @@
-#include "../include/read.h"
-
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +7,7 @@
 #include <unistd.h>
 
 #include "../include/memory.h"
+#include "../include/read.h"
 
 static unsigned short fileline(char *content)
 {
