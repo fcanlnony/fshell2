@@ -41,18 +41,6 @@ cmd_or_pipe_chain_t *array_vanilla_parse(char *input, cmd_or_pipe_chain_t *vanil
         return (cmd_or_pipe_chain_t *)NULL;
 }
 
-/*
-cmd_t array_chain_parse(char *input, cmd_t array_chain)
-{
-    return array_vanilla_parse(input, array_chain, "&&");
-}
-
-pipe_t array_pipe_parse(char *input, pipe_t pipe_chain)
-{
-  return array_vanilla_parse(input, array_parse(char *string, char **array), char *symbol)
-}
-*/
-
 bool check_and(const char *string)
 {
     if (strstr(string, "&&") != NULL)
