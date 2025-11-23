@@ -2,7 +2,7 @@
 #define _FSHELL2_H_
 
 #define SHELL_NAME "fshell"
-#define FSHELL_VERSION "0.0.7"
+#define FSHELL_VERSION "0.0.8"
 
 _Noreturn void help();
 unsigned short array_pipe_num = 0;
