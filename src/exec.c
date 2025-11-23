@@ -22,31 +22,33 @@ void execvp_without_pipe(char **array)
 
 void execvp_with_pipe(char **arrayA, char **arrayB)
 {
-    pid_t parent = fork();
-    if (parent == 0)
-    {
-        int pipefd[2];
-        pipe(pipefd);
-        pid_t child = fork();
-        if (child == 0)
-        {
-            close(pipefd[1]);
-            dup2(pipefd[0], STDIN_FILENO);
-            close(pipefd[0]);
-            if (execvp(arrayB[0], arrayB) < 0)
-                fprintf(stderr, "fshell : %s : command not found.\n", arrayB[0]);
-            exit(EXIT_SUCCESS);
-        }
-        else if (child > 0)
-        {
-            close(pipefd[0]);
-            dup2(pipefd[1], STDOUT_FILENO);
-            close(pipefd[1]);
-            if (execvp(arrayA[0], arrayA) < 0)
-                fprintf(stderr, "fshell : %s : command not found.\n", arrayA[0]);
-            exit(EXIT_SUCCESS);
-        }
+    int pipefd[2];
+    pid_t pid_a, pid_b;
+    if (pipe(pipefd) == -1)
+        exit(EXIT_FAILURE);
+    
+    pid_a = fork();
+    if (pid_a == 0) {
+        dup2(pipefd[1], STDOUT_FILENO);
+        close(pipefd[0]);
+        close(pipefd[1]);
+        if (execvp(arrayA[0], arrayA) < 0)
+            fprintf(stderr, "fshell : %s : command not found.\n", arrayA[0]);
+        exit(EXIT_FAILURE);
     }
-    else if (parent > 0)
-        wait(NULL);
+
+    pid_b = fork();
+    if (pid_b == 0) {
+        dup2(pipefd[0], STDIN_FILENO);
+        close(pipefd[1]);
+        close(pipefd[0]);
+        if (execvp(arrayB[0], arrayB) < 0)
+            fprintf(stderr, "fshell : %s : command not found.\n", arrayB[0]);
+        exit(EXIT_FAILURE);
+    }
+    close(pipefd[0]);
+    close(pipefd[1]);
+    
+    waitpid(pid_a, NULL, 0);
+    waitpid(pid_b, NULL, 0);
 }
