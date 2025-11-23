@@ -57,6 +57,19 @@ void fshell_init(head_alias_t head)
             char *array_sentence[FSHELL_INIT_FILE_ARRAY_NUM] = {NULL};
             while (copy2->sentence != NULL)
             {
+                char *p = copy2->sentence;
+                while (*p == ' ' || *p == '\t')
+                    p++;
+                if (*p == '\0')
+                {
+                    if (copy2->next != NULL)
+                    {
+                        copy2 = copy2->next;
+                        continue;
+                    }
+                    else
+                        break;
+                }
                 array_parse(copy2->sentence, array_sentence);
                 FLAG = check_builtin_cmd(array_sentence[0]);
                 if (FLAG != NON_BUILTIN_CMD)
@@ -83,6 +96,12 @@ void fshell_init(head_alias_t head)
                     content[strlen(content) - 1] = '\0';
                 char *array[FSHELL_INIT_FILE_ARRAY_NUM] = {NULL};
                 array_parse(content, array);
+                if (array[0] == NULL)
+                {
+                    fclose(fp);
+                    free(file_path);
+                    return (void)NULL;
+                }
                 int FLAG = check_builtin_cmd(array[0]);
                 if (FLAG != NON_BUILTIN_CMD)
                     exec_builtin_cmd(array, FLAG, head, NULL, NULL);

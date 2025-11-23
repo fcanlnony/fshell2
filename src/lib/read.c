@@ -9,20 +9,20 @@
 #include "../include/memory.h"
 #include "../include/read.h"
 
-static unsigned short fileline(char *content)
+static unsigned short fileline(const char *content, unsigned short len)
 {
-    int i = 0, j = 0, num = count_for_strlcpy(content);
-    char copy[num];
-    strlcpy(copy, content, count_for_strlcpy(content));
-    while (copy[j] != EOF)
+    unsigned short line = 0;
+    size_t i = 0;
+
+    while (i < len)
     {
-        if (copy[j] == '\n')
-        {
-            i += 1;
-        }
-        j += 1;
-    }
-    return i;
+        if (content[i] == '\n')
+            line += 1;
+        i += 1;
+    } 
+    if (len > 0 && content[len - 1] != '\n')
+        line += 1;
+    return line;
 }
 
 unsigned short filesize(char *file)
@@ -49,14 +49,27 @@ unsigned short get_file_line(char *filepath)
 {
     int config_file = open(filepath, O_RDONLY);
     struct stat file_sb;
-    stat(filepath, &file_sb);
-    char *buf = (char *)calloc(file_sb.st_size / sizeof(char), sizeof(char));
-    if (read(config_file, buf, file_sb.st_size / sizeof(char)) == 0)
+    if (config_file == -1)
         return 0;
-    else
+    if (fstat(config_file, &file_sb) == -1)
     {
-        unsigned short line = fileline(buf);
-        free(buf);
-        return line;
+        close(config_file);
+        return 0;
     }
+    if (file_sb.st_size == 0)
+    {
+        close(config_file);
+        return 0;
+    }
+    char *buf = (char *)calloc(file_sb.st_size, sizeof(char));
+    ssize_t n = read(config_file, buf, file_sb.st_size);
+    close(config_file);
+    if (n <= 0)
+    {
+        free(buf);
+        return 0;
+    }
+    unsigned short line = fileline(buf, (size_t)n);
+    free(buf);
+    return line;
 }
